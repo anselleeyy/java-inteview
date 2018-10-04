@@ -13,6 +13,7 @@
 
 ## Java 高级
 
+* [线程与并发](java-gao-ji/xian-cheng-yu-bing-fa.md)
 * [Redis 缓存](java-gao-ji/redis.md)
 
 ## 大数据与分布式

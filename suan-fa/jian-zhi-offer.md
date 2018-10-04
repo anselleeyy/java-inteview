@@ -208,6 +208,180 @@ public class Solution {
 }
 ```
 
+### 5. 用两个栈实现队列
+
+#### 题目描述
+
+> 用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型
+>
+> 题目链接：[https://www.nowcoder.com/practice/54275ddae22f475981afa2244dd448c6?tpId=13&tqId=11158&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking](https://www.nowcoder.com/practice/54275ddae22f475981afa2244dd448c6?tpId=13&tqId=11158&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+#### 解题思路
+
+> 利用栈的先进后出思想，两个栈配合达到先进先出
+
+```javascript
+public class Solution {
+    Stack<Integer> stack1 = new Stack<Integer>();
+    Stack<Integer> stack2 = new Stack<Integer>();
+    
+    public void push(int node) {
+        stack1.push(node);
+    }
+    
+    public int pop() {
+        if (stack2.isEmpty()) {
+            while (!stack1.isEmpty()) {
+                stack2.push(stack1.pop());
+            }
+        }
+        return stack2.pop();
+    }
+}
+```
+
+### 6. 旋转数组的最小数字
+
+#### 题目描述
+
+> 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。
+>
+> 例如数组 {3, 4, 5, 1, 2} 为 { 1, 2, 3, 4, 5 } 的一个旋转，该数组的最小值为1。
+>
+> NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+>
+> 题目链接：[https://www.nowcoder.com/practice/9f3231a991af4f55b95579b44b7a01ba?tpId=13&tqId=11159&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking](https://www.nowcoder.com/practice/9f3231a991af4f55b95579b44b7a01ba?tpId=13&tqId=11159&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+#### 解题思路
+
+> 二分思想：数组变成了两段升序的子序列，每一次找中间点，如果中间点大于最后边的，代表转折点在中间点和右端之间，否则在左端
+
+```javascript
+public class Solution {
+    public int minNumberInRotateArray(int [] array) {
+        int i = 0;
+        int j = array.length-1;
+        if (i == j) return 0;
+        int middle = 0;
+        while (array[i] >= array[j]) {
+            if (j - i == 1) {
+                middle = j;
+                break;
+            }
+            middle = i + (j - i) / 2;
+            if (array[middle] >= array[j]) {
+                i = middle;
+            } else {
+                j = middle;
+            }
+        }
+        return array[middle];
+    }
+}
+```
+
+### 7. 斐波那契数列
+
+#### 题目描述
+
+> 大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0，n &lt;= 39）
+>
+> 题目链接：[https://www.nowcoder.com/practice/c6c7742f5ba7442aada113136ddea0c3?tpId=13&tqId=11160&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking](https://www.nowcoder.com/practice/c6c7742f5ba7442aada113136ddea0c3?tpId=13&tqId=11160&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+#### 解题思路
+
+> 迭代或递归思路，但由于 n 较大，递归会爆栈
+
+```javascript
+public class Solution {
+    public int Fibonacci(int n) {
+        if (n == 0) return 0;
+        if (n == 1 || n == 2) return 1;
+        int[] result = new int[n+1];
+        result[1] = 1;
+        result[2] = 1;
+        for (int i = 3; i < n+1; i++) {
+            result[i] = result[i-1] + result[i-2];
+        }
+        return result[n];
+    }
+}
+```
+
+### 8. 跳台阶
+
+#### 题目描述
+
+> 一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。
+
+#### 解题思路
+
+> 动态规划：第 n\(n &gt;= 3\) 级的台阶可以通过青蛙在 n-1 级跳一级或 n-2 级跳两级达到
+
+```javascript
+public class Solution {
+    public int JumpFloor(int target) {
+        if (target <= 2) return target;
+        int[] result = new int[target+1];
+        result[1] = 1;
+        result[2] = 2;
+        for (int i = 3; i <= target; i++) {
+            result[i] = result[i-1] + result[i-2];
+        }
+        return result[target];
+    }
+}
+```
+
+### 9. 变态跳台阶
+
+#### 题目描述
+
+> 一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法
+
+#### 解题思路
+
+> 公式法：F\(n\) = F\(n-1\)+F\(n-2\)+F\(n-3\)+...+F\(1\)，F\(n-1\) = F\(n-2\)+F\(n-3\)+...+F\(1\) =&gt; F\(n\) = 2 \* F\(n-1\)
+>
+> 在网上看到这种说法，感觉更加易懂：每个台阶都有跳与不跳两种情况（除了最后一个台阶），最后一个台阶必须跳。所以共用 2^\(n-1\) 中情况
+
+```javascript
+public class Solution {
+    public int JumpFloorII(int target) {
+        if (target == 0) return 0;
+        // return (int) Math.pow(2, target-1);
+        return 1 << (target-1);  // 位移操作，更快
+    }
+}
+```
+
+### 10. 矩阵覆盖
+
+#### 题目描述
+
+> 我们可以用2\*1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2\*1的小矩形无重叠地覆盖一个2\*n的大矩形，总共有多少种方法？
+>
+> 题目链接：[https://www.nowcoder.com/practice/72a5a919508a4251859fb2cfb987a0e6?tpId=13&tqId=11163&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking](https://www.nowcoder.com/practice/72a5a919508a4251859fb2cfb987a0e6?tpId=13&tqId=11163&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+#### 解题思路
+
+> 同第8题跳台阶相同
+
+```javascript
+public class Solution {
+    public int RectCover(int target) {
+        if (target <= 2) return target;
+        int[] result = new int[target+1];
+        result[1] = 1;
+        result[2] = 2;
+        for (int i = 3; i <= target; i++) {
+            result[i] = result[i-1] + result[i-2];
+        }
+        return result[target];
+    }
+}
+```
+
 ### 15. 反转链表
 
 #### 题目描述
