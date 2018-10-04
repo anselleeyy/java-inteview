@@ -117,3 +117,19 @@ _PS:  启动线程需要调用Thread.start\(\)，调用Thread.run\(\)只会执�
 
 > 等待的线程，需要被其他线程唤醒，不会被分配CPU时间的线程，这种状态通常是指一个线程拥有对象锁后进入到相应的代码区域后，调用相应的“锁对象”的wait\(\)方法操作后产生的一种结果Thread state for a waiting thread
 
+### TIMED\_WAITING（限时等待）
+
+> Thread state for a waiting thread with a specified waiting time
+>
+> 限期等待的线程，一定时间后会由系统自动唤醒
+
+### TERMINATED（终止）
+
+> Thread state for a terminated thread
+>
+> 终止的线程
+
+### 线程状态转换图
+
+
+
