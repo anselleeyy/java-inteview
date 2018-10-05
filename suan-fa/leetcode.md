@@ -16,28 +16,63 @@ Leetcode 刷题的笔记，可能有些方法并不是最优解，并且应当�
 
 | 序号 | 题解 |
 | :--- | :--- |
-| 1 | [两数之和](leetcode.md#1-liang-shu-zhi-he) |
-| 13 | [罗马数字转整数](leetcode.md#213-leetcode-13-luo-ma-shu-zi-zhuan-zheng-shu) |
+| 1 | [两数之和（Two Sum）](leetcode.md#1-liang-shu-zhi-he) |
+| 13 | [罗马数字转整数（Roman to Integer）](leetcode.md#13-luo-ma-shu-zi-zhuan-zheng-shu) |
 
 #### MEDIUM
 
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">序号</th>
+      <th style="text-align:left">题解</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left">2</td>
+      <td style="text-align:left"><a href="leetcode.md#2-liang-shu-xiang-jia">两数相加（Add Two Numbers）</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">3</td>
+      <td style="text-align:left"><a href="leetcode.md#3-wu-zhong-fu-zi-fu-de-zui-chang-zi-chuan">无重复字符的最长子串（Longest Substring Without Repeating Characters）</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">34</td>
+      <td style="text-align:left">
+        <p><a href="leetcode.md#34-zai-pai-xu-shu-zu-zhong-cha-zhao-yuan-su-de-di-yi-ge-he-zui-hou-yi-ge-wei-zhi">在排序数组中查找元素的第一个和最后一个位置</a>
+        </p>
+        <p><a href="leetcode.md#34-zai-pai-xu-shu-zu-zhong-cha-zhao-yuan-su-de-di-yi-ge-he-zui-hou-yi-ge-wei-zhi">（Find First and Last Position of Element in Sorted Array）</a>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">36</td>
+      <td style="text-align:left"><a href="leetcode.md#36-you-xiao-de-shu-du">有效的数独（Valid Sudoku）</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">152</td>
+      <td style="text-align:left"><a href="leetcode.md#152-cheng-ji-zui-da-zi-xu-lie">乘积最大子序列（Maximum Product Subarray）</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">153</td>
+      <td style="text-align:left"><a href="leetcode.md#153-xun-zhao-xuan-zhuan-pai-xu-shu-zu-zhong-de-zui-xiao-zhi">寻找旋转排序数组中的最小值（Find Minimum in Rotated Sorted Array）</a>
+      </td>
+    </tr>
+  </tbody>
+</table>#### HARD
+
 | 序号 | 题解 |
 | :--- | :--- |
-| 2 | [两数相加](leetcode.md#2-liang-shu-xiang-jia) |
-| 3 | [无重复字符的最长子串](leetcode.md#3-wu-zhong-fu-zi-fu-de-zui-chang-zi-chuan) |
-| 36 | [有效的数独](leetcode.md#36-you-xiao-de-shu-du) |
-
-#### HARD
-
-| 序号 | 题解 |
-| :--- | :--- |
-| 42 | [接雨水](leetcode.md#42-jie-yu-shui) |
+| 42 | [接雨水（Trapping Rain Water）](leetcode.md#42-jie-yu-shui) |
 
 ## 题册
 
 ### 1 两数之和
-
-#### 解题思路
 
 > 思路1：暴力遍历，O\(N^2\)
 >
@@ -163,6 +198,68 @@ class Solution {
 }
 ```
 
+### 34 在排序数组中查找元素的第一个和最后一个位置
+
+> 思路1：二分法找到任意一个 target 的下标，然后向左向右找到边界
+>
+> 思路2：两次二分，找到左边界和右边界
+>
+> 题目链接：[https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/)
+
+```javascript
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        if (nums.length == 0 || nums == null) return new int[] { -1, -1 };
+        int left = findLeft(nums, target);
+        int right = findRight(nums, target);
+        return new int[]{ left, right };
+    }
+    
+    private int findLeft(int[] nums, int target) {
+        int low = 0;
+        int high = nums.length - 1;
+        int mid = 0, idx = -1;
+        
+        while (low <= high) {
+            mid = (low + high) >> 1;
+            if (nums[mid] < target) {
+                low = mid + 1;
+            } else if (nums[mid] > target) {
+                high = mid - 1;
+            } else {
+                // 记录下标
+                idx = mid;
+                // 左边界，往左继续寻找
+                high = mid - 1;
+            }
+        }
+        return idx;
+        
+    }
+    
+    private int findRight(int[] nums, int target) {
+        int low = 0;
+        int high = nums.length - 1;
+        int mid = 0, idx = -1;
+        
+        while (low <= high) {
+            mid = (low + high) >> 1;
+            if (nums[mid] < target) {
+                low = mid + 1;
+            } else if (nums[mid] > target) {
+                high = mid - 1;
+            } else {
+                // 记录下标
+                idx = mid;
+                // 右边界，往右继续寻找
+                low = mid + 1;
+            }
+        }
+        return idx;
+    }
+}
+```
+
 ### 36 有效的数独
 
 > 思路1：分别判断行、列、3\*3 的宫内判断，该做法时间复杂度为：O\(3 \* n^3\)
@@ -236,6 +333,61 @@ class Solution {
             waterSum += Math.max(Math.min(maxL, maxR[i]) - height[i], 0);
         }
         return waterSum;
+    }
+}
+```
+
+### 152 乘积最大子序列
+
+> 乘法的过程中，可能因为正负号导致最小（大）变成最大（小），所以同时记录最小（大）值，采用动态规划，遍历整个数组
+
+```javascript
+class Solution {
+    public int maxProduct(int[] nums) {
+        if (nums == null || nums.length == 0) return -1;
+        int len = nums.length;
+        int _minLast = nums[0], _maxLast = nums[0], _minCur, _maxCur;
+        int res = nums[0];
+        for (int i = 1; i < len; i++) {
+            _maxCur = Math.max(nums[i], Math.max(_maxLast * nums[i], _minLast * nums[i]));
+            _minCur = Math.min(nums[i], Math.min(_maxLast * nums[i], _minLast * nums[i]));
+            _maxLast = _maxCur;
+            _minLast = _minCur;
+            res = Math.max(res, _maxLast);
+        }
+        return res;
+    }
+}
+```
+
+### 153 寻找旋转排序数组中的最小值
+
+> 二分法，有序的数组变成了两段升序的子序列，每一次找中间点，如果中间点大于等于最后边的，代表转折点在中间点和右端之间，否则在左端
+>
+> 题目链接：[https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/description/](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/description/)
+>
+> 相关题目：剑指Offer第6题，[旋转数组的最小数字](jian-zhi-offer.md#6-xuan-zhuan-shu-zu-de-zui-xiao-shu-zi)
+
+```javascript
+class Solution {
+    public int findMin(int[] nums) {
+        int low = 0;
+        int high = nums.length - 1;
+        if (low == high) return nums[low];
+        int middle = 0;
+        while (nums[low] >= nums[high]) {
+            middle = (high + low) >> 1;
+            if (high - low == 1) {
+                middle = high;
+                break;
+            }
+            if (nums[middle] >= nums[high]) {
+                low = middle;
+            } else {
+                high = middle;
+            }
+        }
+        return nums[middle];
     }
 }
 ```
