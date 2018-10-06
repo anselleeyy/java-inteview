@@ -131,5 +131,108 @@ _PS:  启动线程需要调用Thread.start\(\)，调用Thread.run\(\)只会执�
 
 ### 线程状态转换图
 
+> 摘自《Java 并发编程的艺术》—— 方腾飞
 
+![Java &#x7EBF;&#x7A0B;&#x72B6;&#x6001;&#x53D8;&#x8FC1;&#x56FE;](../.gitbook/assets/7-fr-n-m1sc4ui-h1-37j.png)
+
+## 进程与线程
+
+### 基本概念
+
+* 进程：CPU资源分配的最小单位。进程是程序执行时的一个实例，即它是程序已经执行到何种程度的数据结构的汇集。从内核的观点看，进程的目的就是担当分配系统资源（CPU时间、内存等）的基本单位。
+* 线程：CPU调度的最小单位。线程是进程的一个执行流，是CPU调度和分派的基本单位，它是比进程更小的能独立运行的基本单位。一个进程由几个线程组成（拥有很多相对独立的执行流的用户程序共享应用程序的大部分数据结构），线程与同属一个进程的其他的线程共享进程所拥有的全部资源。
+
+### 多进程与多线程
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">对比维度</th>
+      <th style="text-align:left">多进程</th>
+      <th style="text-align:left">多线程</th>
+      <th style="text-align:left">总结</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left">数据共享、同步</td>
+      <td style="text-align:left">
+        <p>数据共享复杂，需要用IPC；</p>
+        <p>数据是公开的，同步简单</p>
+      </td>
+      <td style="text-align:left">
+        <p>因为共享进程数据，数据共享简单，</p>
+        <p>但也因此导致同步复杂</p>
+      </td>
+      <td style="text-align:left">各有优势</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">内存、CPU</td>
+      <td style="text-align:left">
+        <p>占用内存多，切换复杂；</p>
+        <p>CPU利用率低</p>
+      </td>
+      <td style="text-align:left">占用内存少，切换简单，CPU利用率高</td>
+      <td style="text-align:left">线程占优</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">创建销毁、切换</td>
+      <td style="text-align:left">创建销毁、切换复杂；速度慢</td>
+      <td style="text-align:left">创建销毁、切换简单、速度快</td>
+      <td style="text-align:left">线程占优</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">编程、调试</td>
+      <td style="text-align:left">编程简单，调式简单</td>
+      <td style="text-align:left">编程复杂，调试复杂</td>
+      <td style="text-align:left">进程占优</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">可靠性</td>
+      <td style="text-align:left">进程间不会互相影响</td>
+      <td style="text-align:left">一个线程挂掉可能导致整个进程挂</td>
+      <td style="text-align:left">进程占优</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">分布式</td>
+      <td style="text-align:left">
+        <p>适用于多核、多机分布式；</p>
+        <p>如果一台机器不够，扩展到多台</p>
+        <p>机器比较简单</p>
+      </td>
+      <td style="text-align:left">适用于多核分布式</td>
+      <td style="text-align:left">进程占优</td>
+    </tr>
+  </tbody>
+</table>#### 需要频繁创建销毁的优先线程
+
+> 最常见的应用就是Web服务器了，来一个连接建立一个线程，断了就销毁线程，要是用进程，创建和销毁的代价是很难承受的
+
+#### 需要进行大量计算的优先线程
+
+> 大量计算：耗费较多很多CPU资源，切换频繁
+>
+> 案例：图像处理、算法计算等
+
+#### 强相关的处理用线程，弱相关的处理用进程
+
+> 案例：一般的Server需要完成如下任务：消息收发、消息处理。“消息收发”和“消息处理”就是弱相关的任务，而“消息处理”里面可能又分为“消息解码”、“业务处理”，这两个任务相对来说相关性就要强多了。因此“消息收发”和“消息处理”可以分进程设计，“消息解码”、“业务处理”可以分线程设计（摘自 [燕燕于飞差池其羽](https://www.zhihu.com/people/hu-qin-2)）
+
+## 进程间通信
+
+IPC（Inter-Process Communication）
+
+### 管道通信
+
+### 命名管道通信
+
+### 信号
+
+### 消息队列
+
+### 共享内存
+
+### 信号量
+
+### 套接字
 
