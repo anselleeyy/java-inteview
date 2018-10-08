@@ -63,12 +63,18 @@ Leetcode 刷题的笔记，可能有些方法并不是最优解，并且应当�
       <td style="text-align:left"><a href="leetcode.md#153-xun-zhao-xuan-zhuan-pai-xu-shu-zu-zhong-de-zui-xiao-zhi">寻找旋转排序数组中的最小值（Find Minimum in Rotated Sorted Array）</a>
       </td>
     </tr>
+    <tr>
+      <td style="text-align:left">230</td>
+      <td style="text-align:left"><a href="leetcode.md#230-er-cha-sou-suo-shu-zhong-dikxiao-de-yuan-su">二叉搜索树中第K小的元素（Kth Smallest Element in a BST）</a>
+      </td>
+    </tr>
   </tbody>
 </table>#### HARD
 
 | 序号 | 题解 |
 | :--- | :--- |
 | 42 | [接雨水（Trapping Rain Water）](leetcode.md#42-jie-yu-shui) |
+| 99 | [恢复二叉搜索树（Recover Binary Search Tree）](leetcode.md#99-hui-fu-er-cha-sou-suo-shu) |
 
 ## 题册
 
@@ -337,6 +343,46 @@ class Solution {
 }
 ```
 
+### 99 恢复二叉搜索树
+
+> 首先，二叉搜索树的中序遍历是升序有序的，在交换了其中两个值的情况下，会产生两个递减的子序列，这时我们可以认定第一个子序列的第一个元素和第二个子序列的第二个元素发生了对调。
+>
+> 案例：原中序遍历序列：123456 -&gt; 对调后：125436，子序列：54和43，可以看出，5和3是对调的元素
+>
+> PS：达到常数的空间复杂度：O\(3\)
+>
+> 题目链接：[https://leetcode-cn.com/problems/recover-binary-search-tree/description/](https://leetcode-cn.com/problems/recover-binary-search-tree/description/)
+
+```javascript
+class Solution {
+    TreeNode pre = null;
+    TreeNode first = null;
+    TreeNode sec = null;
+    public void recoverTree(TreeNode root) {
+        inOrder(root);
+        // swap
+        int tmp = first.val;
+        first.val = sec.val;
+        sec.val = tmp;
+    }
+    
+    private void inOrder(TreeNode root) {
+        if (root == null) return;
+        inOrder(root.left);
+        if (pre != null) {
+            if (pre.val > root.val) {
+                if (first == null) {
+                    first = pre;
+                }
+                sec = root;
+            }
+        }
+        pre = root;
+        inOrder(root.right);
+    }
+}
+```
+
 ### 152 乘积最大子序列
 
 > 乘法的过程中，可能因为正负号导致最小（大）变成最大（小），所以同时记录最小（大）值，采用动态规划，遍历整个数组
@@ -388,6 +434,34 @@ class Solution {
             }
         }
         return nums[middle];
+    }
+}
+```
+
+### 230 二叉搜索树中第K小的元素
+
+> 根据二叉搜索树的特性，模拟中序遍历
+>
+> 方法1：直接中序遍历，然后输出第k个元素，时间复杂度：O\(N\)
+>
+> 方法2：一边中序，一边记录个数，达到 k 则返回，时间复杂度：O\(K\)
+>
+> 题目链接：[https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/description/](https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/description/)
+
+```javascript
+class Solution {
+    private int x = 0;
+    public int kthSmallest(TreeNode root, int k) {
+        if (root == null) return 0;
+        int a = kthSmallest(root.left, k);
+        if (a != 0) {
+            return a;
+        }
+        x++;
+        if (x == k) {
+            return root.val;
+        }
+        return kthSmallest(root.right, k); 
     }
 }
 ```
