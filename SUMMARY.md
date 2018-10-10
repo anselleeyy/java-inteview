@@ -13,7 +13,7 @@
 
 ## Java 高级
 
-* [线程与并发](java-gao-ji/xian-cheng-yu-bing-fa.md)
+* [线程与并发](java-gao-ji/concurrent.md)
 * [Redis 缓存](java-gao-ji/redis.md)
 * [Spring](java-gao-ji/spring.md)
 
@@ -28,5 +28,6 @@
 
 ## 计算机网络
 
-* [网络相关](ji-suan-ji-wang-luo/wang-luo-xiang-guan.md)
+* [TCP 与 UDP](ji-suan-ji-wang-luo/tcp_udp.md)
+* [HTTP 协议](ji-suan-ji-wang-luo/http.md)
 

@@ -28,7 +28,25 @@ description: Java 手册_1.0
 
 #### JAVA 高级
 
+{% page-ref page="java-gao-ji/concurrent.md" %}
+
 {% page-ref page="java-gao-ji/redis.md" %}
+
+{% page-ref page="java-gao-ji/spring.md" %}
+
+#### 大数据与分布式
+
+{% page-ref page="da-shu-ju-yu-fen-bu-shi/fen-bu-shi.md" %}
+
+{% page-ref page="da-shu-ju-yu-fen-bu-shi/zookeeper.md" %}
+
+#### 架构
+
+{% page-ref page="jia-gou/wei-fu-wu.md" %}
+
+#### 计算机网络
+
+{% page-ref page="ji-suan-ji-wang-luo/tcp\_udp.md" %}
 
 
 

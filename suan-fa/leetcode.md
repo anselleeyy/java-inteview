@@ -18,6 +18,9 @@ Leetcode 刷题的笔记，可能有些方法并不是最优解，并且应当�
 | :--- | :--- |
 | 1 | [两数之和（Two Sum）](leetcode.md#1-liang-shu-zhi-he) |
 | 13 | [罗马数字转整数（Roman to Integer）](leetcode.md#13-luo-ma-shu-zi-zhuan-zheng-shu) |
+| 191 | [位1的个数（Number of 1 Bits）](leetcode.md#191-wei-1-de-ge-shu) |
+| 217 | [存在重复元素（Contains Duplicate）](leetcode.md#217-cun-zai-zhong-fu-yuan-su) |
+| 219 | [存在重复元素（Contains Duplicate II）](leetcode.md#219-cun-zai-zhong-fu-yuan-su-ii) |
 
 #### MEDIUM
 
@@ -61,6 +64,11 @@ Leetcode 刷题的笔记，可能有些方法并不是最优解，并且应当�
     <tr>
       <td style="text-align:left">153</td>
       <td style="text-align:left"><a href="leetcode.md#153-xun-zhao-xuan-zhuan-pai-xu-shu-zu-zhong-de-zui-xiao-zhi">寻找旋转排序数组中的最小值（Find Minimum in Rotated Sorted Array）</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">220</td>
+      <td style="text-align:left"><a href="leetcode.md#220-cun-zai-zhong-fu-yuan-su-iii">存在重复元素 III（Contains Duplicate III）</a>
       </td>
     </tr>
     <tr>
@@ -434,6 +442,118 @@ class Solution {
             }
         }
         return nums[middle];
+    }
+}
+```
+
+### 191 位1的个数
+
+> 使用和 1 的按位与得到最右边一位是否是 1，然后循环右移，该方法时间复杂度：O\(n\)
+>
+> PS：注意，题目中注明 n 为无符号整数，所以使用 &gt;&gt;&gt; 操作符，并且：判断条件为 n != 0
+>
+> 题目链接：[https://leetcode-cn.com/problems/number-of-1-bits/description/](https://leetcode-cn.com/problems/number-of-1-bits/description/)
+
+```javascript
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        int count = 0;
+        while (n != 0) {
+            if ((n & 1) == 1) count++;
+            n >>>= 1;
+        }
+        return count;
+    }
+}
+```
+
+### 217 存在重复元素
+
+> 题目链接：[https://leetcode-cn.com/problems/contains-duplicate/description/](https://leetcode-cn.com/problems/contains-duplicate/description/)
+
+```javascript
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length-1; i++) {
+            if (nums[i] == nums[i+1]) return true;
+        }
+        return false;
+    }
+}
+```
+
+### 219 存在重复元素 II
+
+> 题目链接：[https://leetcode-cn.com/problems/contains-duplicate-ii/description/](https://leetcode-cn.com/problems/contains-duplicate-ii/description/)
+
+```javascript
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int tmp = nums[i];
+            if (map.containsKey(tmp)) {
+                int idx = map.get(tmp);
+                if (Math.abs(idx - i) <= k) return true;
+            }
+            map.put(tmp, i);
+        }
+        return false;
+    }
+}
+```
+
+### 220 存在重复元素 III
+
+> 自己的思路：往 set 保存当前下标为：i - k+1 ~ i  的元素，并截取大小在 nums\[i\] - t ~ nums\[i\] + t 范围内的元素，进而进行判断
+>
+> 别人的思路：遍历数组 nums，并遍历i - i+k，进而进行判断（优化：基于一种滑动窗口的思想）
+
+* 自己的代码
+
+```javascript
+class Solution {
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        // 输入检验，去掉不合法输入以及必然会不正确的一些输入
+        if (k <= 0 || t < 0 || nums == null || nums.length <= 1) return false;
+        TreeSet<Long> set = new TreeSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            SortedSet<Long> subSet = set.subSet((long) nums[i] - t, (long) nums[i] + t + 1);
+            if (!subSet.isEmpty()) {
+				return true;
+			}
+            if (i >= k) {
+				set.remove((long) nums[i - k]);
+			}
+            set.add((long) nums[i]);
+        }
+        return false;
+    }
+}
+```
+
+* 别人的思路（优化后的，滑动窗口思想）
+
+```javascript
+class Solution {
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        // 输入检验，去掉不合法输入以及必然会不正确的一些输入
+        if (k <= 0 || t < 0 || nums == null || nums.length <= 1) return false;
+		int i = 0, j = 1;
+		while (i < nums.length - 1) {
+			if (i != j && Math.abs((long) nums[i] - nums[j]) <= t)
+				return true;
+			if (j - i == k || j == nums.length - 1) {
+				i++;
+				if (t != 0)
+					j = i + 1;
+			} else {
+				j++;
+			}
+		}
+		return false;
     }
 }
 ```

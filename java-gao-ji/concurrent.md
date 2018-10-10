@@ -1,5 +1,5 @@
 ---
-description: Thread
+description: java concurrent
 ---
 
 # 线程与并发
