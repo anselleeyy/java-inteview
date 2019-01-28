@@ -12,20 +12,20 @@
 
 | 序号 | 题解 |
 | :--- | :--- |
-| 1 | [两数之和（Two Sum）](leetcode.md#1-两数之和) |
-| 7 | [反转整数（Reverse Integer）](leetcode.md#7-反转整数) |
-| 9 | [回文数（Palindrome Number）](leetcode.md#9-回文数) |
-| 13 | [罗马数字转整数（Roman to Integer）](leetcode.md#13-罗马数字转整数) |
-| 14 | [最长公共前缀（Longest Common Prefix）](leetcode.md#14-最长公共前缀) |
-| 107 | [二叉树的层次遍历 II（Binary Tree Level Order Traversal II）](leetcode.md#107-二叉树的层次遍历-ii) |
-| 189 | [旋转数组（Rotate Array）](leetcode.md#189-旋转数组) |
-| 191 | [位1的个数（Number of 1 Bits）](leetcode.md#191-位1的个数) |
-| 203 | [移出链表元素（Remove Linked List Elements）](leetcode.md#203-移出链表元素) |
-| 204 | [计数质数（Count Primes）](leetcode.md#204-计数质数) |
-| 217 | [存在重复元素（Contains Duplicate）](leetcode.md#217-存在重复元素) |
-| 219 | [存在重复元素 II（Contains Duplicate II）](leetcode.md#219-存在重复元素-ii) |
-| 226 | [翻转二叉树（Invert Binary Tree）](leetcode.md#226-翻转二叉树) |
-| 263 | [丑数（Ugly Number）](leetcode.md#263-丑数) |
+| 1 | [两数之和（Two Sum）](leetcode.md#1%20两数之和) |
+| 7 | [反转整数（Reverse Integer）](leetcode.md#7%20反转整数) |
+| 9 | [回文数（Palindrome Number）](leetcode.md#9%20回文数) |
+| 13 | [罗马数字转整数（Roman to Integer）](leetcode.md#13%20罗马数字转整数) |
+| 14 | [最长公共前缀（Longest Common Prefix）](leetcode.md#14%20最长公共前缀) |
+| 107 | [二叉树的层次遍历 II（Binary Tree Level Order Traversal II）](leetcode.md#107%20二叉树的层次遍历-ii) |
+| 189 | [旋转数组（Rotate Array）](leetcode.md#189%20旋转数组) |
+| 191 | [位1的个数（Number of 1 Bits）](leetcode.md#191%20位1的个数) |
+| 203 | [移出链表元素（Remove Linked List Elements）](leetcode.md#203%20移出链表元素) |
+| 204 | [计数质数（Count Primes）](leetcode.md#204%20计数质数) |
+| 217 | [存在重复元素（Contains Duplicate）](leetcode.md#217%20存在重复元素) |
+| 219 | [存在重复元素 II（Contains Duplicate II）](leetcode.md#219%20存在重复元素%20ii) |
+| 226 | [翻转二叉树（Invert Binary Tree）](leetcode.md#226%20翻转二叉树) |
+| 263 | [丑数（Ugly Number）](leetcode.md#263%20丑数) |
 
 ### MEDIUM
 
