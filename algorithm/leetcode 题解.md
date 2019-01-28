@@ -4,7 +4,7 @@
 
 > Leetcode 刷题的笔记，可能有些方法并不是最优解，并且应当不会写什么注释，不喜勿喷
 > 
-> 当前合计：43题
+> 当前合计：46题
 
 ## 1 目录
 
@@ -38,6 +38,9 @@
 | 8 | [字符串转换整数（String to Integer）](leetcode%20题解.md#8-字符串转换整数) |
 | 11 | [盛最多水的容器（Container With Most Water）](leetcode%20题解.md#11-盛最多水的容器) |
 | 12 | [整数转罗马数字（Integer to Roman）](leetcode%20题解.md#12-整数转罗马数字) |
+| 15 | [三数之和（3Sum）](leetcode%20题解.md#15-三数之和) |
+| 16 | [最接近的三数之和（3Sum Closest）](leetcode%20题解.md#16-最接近的三数之和) |
+| 17 | [电话号码的字母组合（Letter Combinations of a Phone Number）](leetcode%20题解.md#17-电话号码的字母组合) |
 | 34 | [在排序数组中查找元素的第一个和最后一个位置（Find First and Last Position of Element in Sorted Array）](leetcode%20题解.md#34-在排序数组中查找元素的第一个和最后一个位置) |
 | 36 | [有效的数独（Valid Sudoku）](leetcode%20题解.md#36-有效的数独) |
 | 96 | [不同的二叉搜索树（Unique Binary Search Trees）](leetcode%20题解.md#96-不同的二叉搜索树) |
@@ -501,6 +504,121 @@ class Solution {
         }
         return common_prefix;
     }
+}
+```
+
+### 15 三数之和
+
+> 题目链接：[https://leetcode-cn.com/problems/3sum/](https://leetcode-cn.com/problems/3sum/)
+
+```java
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+		List<List<Integer>> result = new ArrayList<>();
+		int last = Integer.MIN_VALUE;
+		for (int i = 0; i < nums.length - 2; i++) {
+			if (last == nums[i]) {
+				continue;
+			}
+			last = nums[i];
+			int head = i + 1;
+			int tail = nums.length - 1;
+			int last_head = nums[head];
+			while (head < tail) {
+
+				if (head != i+1 && last_head == nums[head]) {
+                    head++;
+                    continue; 
+                }
+				
+				int temp = nums[i] + nums[head] + nums[tail];
+
+				if (temp > 0) {
+					tail--;
+				} else if (temp < 0) {
+					head++;
+				} else {
+					List<Integer> list = Arrays.asList(nums[i], nums[head], nums[tail]);
+					result.add(list);
+					last_head = nums[head];
+					tail--;
+					head++;
+				}
+			}
+		}
+		return result;
+    }
+}
+```
+
+### 16 最接近的三数之和
+
+> 题目链接：[https://leetcode-cn.com/problems/3sum-closest/](https://leetcode-cn.com/problems/3sum-closest/)
+
+```java
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int min = Integer.MAX_VALUE;
+        int result = 0;
+        for (int i = 0; i < nums.length-2; i++) {
+            int base = nums[i];
+            int left = i+1;
+            int right = nums.length-1;
+            while (left < right) {
+                int sum = base + nums[left] + nums[right];
+                if (Math.abs(sum - target) < min) {
+                    min = Math.abs(sum - target);
+                    result = sum;
+                }
+                if (sum < target) {
+                    left ++;
+                } else {
+                    right--;
+                }
+            }
+        }
+        return result;
+    }
+}
+```
+
+### 17 电话号码的字母组合
+
+> 题目链接：[https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/)
+
+```java
+class Solution {
+    
+    char[][] alphabet = { {}, { 'a', 'b', 'c' }, { 'd', 'e', 'f' }, { 'g', 'h', 'i' }, { 'j', 'k', 'l' },
+			{ 'm', 'n', 'o' }, { 'p', 'q', 'r', 's' }, { 't', 'u', 'v' }, { 'w', 'x', 'y', 'z' } };
+
+	public List<String> letterCombinations(String digits) {
+
+		if (digits == null || "".equals(digits)) {
+			return new ArrayList<String>();
+		}
+		int[] digit = new int[digits.length()];
+		for (int i = 0; i < digits.length(); i++) {
+			digit[i] = digits.charAt(i) - '0';
+		}
+		List<String> result = new ArrayList<>();
+		build(digit, 0, result, new StringBuilder());
+		return result;
+	}
+
+	private void build(int[] digit, int index, List<String> result, StringBuilder temp) {
+		if (index == digit.length) {
+			result.add(temp.toString());
+			return;
+		}
+		for (int i = 0; i < alphabet[digit[index] - 1].length; i++) {
+			temp.append(alphabet[digit[index] - 1][i]);
+			build(digit, index + 1, result, temp);
+			temp.deleteCharAt(temp.length() - 1);
+		}
+	}
 }
 ```
 
