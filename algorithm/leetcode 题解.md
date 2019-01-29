@@ -4,7 +4,7 @@
 
 > Leetcode 刷题的笔记，可能有些方法并不是最优解，并且应当不会写什么注释，不喜勿喷
 > 
-> 当前合计：46题
+> 当前合计：52题
 
 ## 1 目录
 
@@ -17,6 +17,8 @@
 | 9 | [回文数（Palindrome Number）](leetcode%20题解.md#9-回文数) |
 | 13 | [罗马数字转整数（Roman to Integer）](leetcode%20题解.md#13-罗马数字转整数) |
 | 14 | [最长公共前缀（Longest Common Prefix）](leetcode%20题解.md#14-最长公共前缀) |
+| 20 | [有效的括号（Valid Parentheses）](leetcode%20题解.md#20-有效的括号) |
+| 21 | [合并两个有序链表（Merge Two Sorted Lists）](leetcode%20题解.md#21-合并两个有序链表) |
 | 107 | [二叉树的层次遍历 II（Binary Tree Level Order Traversal II）](leetcode%20题解.md#107-二叉树的层次遍历-ii) |
 | 189 | [旋转数组（Rotate Array）](leetcode%20题解.md#189-旋转数组) |
 | 191 | [位1的个数（Number of 1 Bits）](leetcode%20题解.md#191-位1的个数) |
@@ -41,6 +43,9 @@
 | 15 | [三数之和（3Sum）](leetcode%20题解.md#15-三数之和) |
 | 16 | [最接近的三数之和（3Sum Closest）](leetcode%20题解.md#16-最接近的三数之和) |
 | 17 | [电话号码的字母组合（Letter Combinations of a Phone Number）](leetcode%20题解.md#17-电话号码的字母组合) |
+| 18 | [四数之和（4Sum）](leetcode%20题解.md#18-四数之和) |
+| 19 | [删除链表的倒数第N个节点（Remove Nth Node From End of List）](leetcode%20题解.md#19-删除链表的倒数第N个节点) |
+| 22 | [括号生成（Generate Parentheses）](leetcode%20题解.md#22-括号生成) |
 | 34 | [在排序数组中查找元素的第一个和最后一个位置（Find First and Last Position of Element in Sorted Array）](leetcode%20题解.md#34-在排序数组中查找元素的第一个和最后一个位置) |
 | 36 | [有效的数独（Valid Sudoku）](leetcode%20题解.md#36-有效的数独) |
 | 96 | [不同的二叉搜索树（Unique Binary Search Trees）](leetcode%20题解.md#96-不同的二叉搜索树) |
@@ -63,6 +68,7 @@
 | 序号 | 题解 |
 | :--- | :--- |
 | 4 | [两个排序数组的中位数（Median of Two Sorted Arrays）](leetcode%20题解.md#4-两个排序数组的中位数) |
+| 23 | [合并K个排序链表（Merge k Sorted Lists）](leetcode%20题解.md#23-合并K个排序链表) |
 | 42 | [接雨水（Trapping Rain Water）](leetcode%20题解.md#42-接雨水) |
 | 99 | [恢复二叉搜索树（Recover Binary Search Tree）](leetcode%20题解.md#99-恢复二叉搜索树) |
 | 146 | [LRU 缓存机制（LRU Cache）](leetcode%20题解.md#146-lru-缓存机制) |
@@ -622,13 +628,232 @@ class Solution {
 }
 ```
 
+### 18 四数之和
+
+> 题目链接：[https://leetcode-cn.com/problems/4sum/](https://leetcode-cn.com/problems/4sum/)
+
+```java
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+		
+		Arrays.sort(nums);
+		
+		int last_k = Integer.MIN_VALUE;
+		for (int k = 0; k < nums.length - 3; k++) {
+			if (last_k == nums[k]) {
+				continue;
+			}
+			last_k = nums[k];
+			for (int i = k+1; i < nums.length - 2; i++) {
+				if (i > k+1 && nums[i] == nums[i-1]) {
+					continue;
+				}
+				int head = i + 1;
+				int tail = nums.length - 1;
+				int last = nums[head];
+				while (head < tail) {
+
+					if (head != i+1 && last == nums[head]) {
+	                    head++;
+	                    continue; 
+	                }
+					
+					int temp = nums[k] + nums[i] + nums[head] + nums[tail];
+
+					if (temp > target) {
+						tail--;
+					} else if (temp < target) {
+						last = nums[head++];
+					} else {
+						List<Integer> list = Arrays.asList(nums[k], nums[i], nums[head], nums[tail]);
+						result.add(list);
+						last = nums[head++];
+						tail--;
+					}
+				}
+			}
+		}
+		
+		return result;
+    }
+}
+```
+
+### 19 删除链表的倒数第N个节点
+
+> 解法1：遍历两遍链表，第一次得到长度。时间复杂度：O(2L−n)，空间复杂度：O(1)
+> 
+> 解法2：仅遍历一遍链表，用两个指针完成，核心点在于保持两个指针的距离为n。时间复杂度：O(L)，空间复杂度：O(1)
+> f
+> 题目链接：[https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
+
+``` java
+/* 解法1 */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+	    ListNode dummy = new ListNode(0);
+	    dummy.next = head;
+	    int length  = 0;
+	    ListNode first = head;
+	    while (first != null) {
+	        length++;
+	        first = first.next;
+	    }
+	    length -= n;
+	    first = dummy;
+	    while (length > 0) {
+	        length--;
+	        first = first.next;
+	    }
+	    first.next = first.next.next;
+	    return dummy.next;
+	}
+}
+
+/* 解法2 */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+	    ListNode dummy = new ListNode(0);
+	    dummy.next = head;
+	    ListNode first = dummy;
+	    ListNode second = dummy;
+	    // first 指针先走，这样 second 和 first 之间距离就是 n
+	    for (int i = 1; i <= n + 1; i++) {
+	        first = first.next;
+	    }
+	    while (first != null) {
+	        first = first.next;
+	        second = second.next;
+	    }
+	    second.next = second.next.next;
+	    return dummy.next;
+	}
+}
+```
+
+### 20 有效的括号
+
+> 题目链接：[https://leetcode-cn.com/problems/valid-parentheses/](https://leetcode-cn.com/problems/valid-parentheses/)
+
+``` java
+/* 借助栈 */
+class Solution {
+    public boolean isValid(String s) {
+        if (s == null || "".equals(s)) return true;
+        Stack<Character> stack = new Stack<>();
+        for (Character c : s.toCharArray()) {
+            if (c == '(') stack.push(')');
+            else if (c == '{') stack.push('}');
+            else if (c == '[') stack.push(']');
+            else if (stack.empty() || stack.pop() != c) return false;
+        }
+        return stack.empty();
+    }
+}
+```
+
+### 21 合并两个有序链表
+
+> 题目链接：[https://leetcode-cn.com/problems/merge-two-sorted-lists/](https://leetcode-cn.com/problems/merge-two-sorted-lists/)
+
+``` java
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(0);
+        ListNode cur = dummyHead;
+        while (l1 != null && l2 != null) {
+			if (l1.val < l2.val) {
+				cur.next = l1;
+				cur = cur.next;
+				l1 = l1.next;
+			} else {
+				cur.next = l2;
+				cur = cur.next;
+				l2 = l2.next;
+			}
+		}
+        cur.next = l1 == null ? l2 : l1;
+        return dummyHead.next;
+    }
+}
+```
+
+### 22 括号生成
+
+> 题目链接：[https://leetcode-cn.com/problems/generate-parentheses/](https://leetcode-cn.com/problems/generate-parentheses/)
+
+``` java
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> result = new LinkedList<>();
+        build(result, "", 0, 0, n);
+        return result;
+    }
+    
+    private void build(List<String> result, String temp, int l, int r, int n) {
+        if (temp.length() == n*2) {
+            result.add(temp);
+            return;
+        }
+        if (l < n) {
+            build(result, temp + "(", l+1, r, n);
+        }
+        if (r < l) {
+            build(result, temp + ")", l, r+1, n);
+        }
+    }
+}
+```
+
+### 23 合并K个排序链表
+
+> 利用归并的思想，实现多个链表的排序
+> 
+> 题目链接：[https://leetcode-cn.com/problems/merge-k-sorted-lists/](https://leetcode-cn.com/problems/merge-k-sorted-lists/)
+
+``` java
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) {
+            return null;
+        }
+        return sort(lists, 0, lists.length-1);
+    }
+    
+    private ListNode sort(ListNode[] lists, int start, int end) {
+        if (start < end) {
+            int mid = (start + end) >> 1;
+            ListNode leftList = sort(lists, start, mid);
+            ListNode rightList = sort(lists, mid+1, end);
+            return merge(leftList, rightList);
+        }
+        return lists[start];
+    }
+    
+    private ListNode merge(ListNode l1, ListNode l2) {
+        ListNode res = null;
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        if (l1.val <= l2.val) {
+            res = l1;
+            l1.next = merge(l1.next, l2);
+        } else {
+            res = l2;
+            l2.next = merge(l1, l2.next);
+        }
+        return res;
+    }
+}
+```
+
 ### 34 在排序数组中查找元素的第一个和最后一个位置
 
 > 思路1：二分法找到任意一个 target 的下标，然后向左向右找到边界
 >
 > 思路2：两次二分，找到左边界和右边界
 >
-> 题目链接：[https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/)
+> 题目链接：[https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
 ```java
 class Solution {
