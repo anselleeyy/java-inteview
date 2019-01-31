@@ -4,7 +4,7 @@
 
 > Leetcode 刷题的笔记，可能有些方法并不是最优解，并且应当不会写什么注释，不喜勿喷
 > 
-> 当前合计：52题
+> 当前合计：55题
 
 ## 1 目录
 
@@ -19,6 +19,8 @@
 | 14 | [最长公共前缀（Longest Common Prefix）](leetcode%20题解.md#14-最长公共前缀) |
 | 20 | [有效的括号（Valid Parentheses）](leetcode%20题解.md#20-有效的括号) |
 | 21 | [合并两个有序链表（Merge Two Sorted Lists）](leetcode%20题解.md#21-合并两个有序链表) |
+| 26 | [删除排序数组中的重复项（Remove Duplicates from Sorted Array）](leetcode%20题解.md#26-删除排序数组中的重复项) |
+| 27 | [移除元素（Remove Element）](leetcode%20题解.md#27-移除元素) |
 | 107 | [二叉树的层次遍历 II（Binary Tree Level Order Traversal II）](leetcode%20题解.md#107-二叉树的层次遍历-ii) |
 | 189 | [旋转数组（Rotate Array）](leetcode%20题解.md#189-旋转数组) |
 | 191 | [位1的个数（Number of 1 Bits）](leetcode%20题解.md#191-位1的个数) |
@@ -46,6 +48,7 @@
 | 18 | [四数之和（4Sum）](leetcode%20题解.md#18-四数之和) |
 | 19 | [删除链表的倒数第N个节点（Remove Nth Node From End of List）](leetcode%20题解.md#19-删除链表的倒数第N个节点) |
 | 22 | [括号生成（Generate Parentheses）](leetcode%20题解.md#22-括号生成) |
+| 24 | [两两交换链表中的节点（Swap Nodes in Pairs）](leetcode%20题解.md#24-两两交换链表中的节点) |
 | 34 | [在排序数组中查找元素的第一个和最后一个位置（Find First and Last Position of Element in Sorted Array）](leetcode%20题解.md#34-在排序数组中查找元素的第一个和最后一个位置) |
 | 36 | [有效的数独（Valid Sudoku）](leetcode%20题解.md#36-有效的数独) |
 | 96 | [不同的二叉搜索树（Unique Binary Search Trees）](leetcode%20题解.md#96-不同的二叉搜索树) |
@@ -843,6 +846,71 @@ class Solution {
             l2.next = merge(l1, l2.next);
         }
         return res;
+    }
+}
+```
+
+### 24 两两交换链表中的节点
+
+> 题目链接：[https://leetcode-cn.com/problems/swap-nodes-in-pairs/](https://leetcode-cn.com/problems/swap-nodes-in-pairs/)
+
+``` java
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode current = dummy;
+        while (current.next != null && current.next.next != null) {
+            ListNode first = current.next;
+            ListNode second = current.next.next;
+            first.next = second.next;
+            second.next = first;
+            current.next = second;
+            current = current.next.next;
+        }
+        return dummy.next;
+    }
+}
+```
+
+### 26 删除排序数组中的重复项
+
+> 题目链接：[https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/)
+
+``` java
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int j = 0;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != nums[j]) {
+                nums[++j] = nums[i];
+            }
+        }
+        return j+1;
+    }
+}
+```
+
+### 27 移除元素
+
+> 双指针做法，时间复杂度：O(n)，空间复杂度：O(1)
+> 
+> 题目链接：[https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/)
+
+``` java
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        int i = 0;
+        int len = nums.length - 1;
+        while (i <= len) {
+            if (nums[i] == val) {
+                nums[i] = nums[len--];
+            } else {
+                i++;
+            }
+        }
+        return len+1;
     }
 }
 ```
