@@ -2,47 +2,49 @@
 
 ## 目录
 
-- [1 二维数组中的查找](jian-zhi-offer.md#1-二维数组中的查找)
-- [2 替换空格](jian-zhi-offer.md#2-替换空格)
-- [3 从尾到头打印链表](jian-zhi-offer.md#3-从尾到头打印链表)
-- [4 重建二叉树](jian-zhi-offer.md#4-重建二叉树)
-- [5 用两个栈实现队列](jian-zhi-offer.md#5-用两个栈实现队列)
-- [6 旋转数组的最小数字](jian-zhi-offer.md#6-旋转数组的最小数字)
-- [7 斐波那契数列](jian-zhi-offer.md#7-斐波那契数列)
-- [8 跳台阶](jian-zhi-offer.md#8-跳台阶)
-- [9 变态跳台阶](jian-zhi-offer.md#9-变态跳台阶)
-- [10 矩阵覆盖](jian-zhi-offer.md#10-矩阵覆盖)
-- [11 二进制中1的个数](jian-zhi-offer.md#11-二进制中1的个数)
-- [12 数值的整数次方](jian-zhi-offer.md#12-数值的整数次方)
-- [13 调整数组顺序使奇数位于偶数前面](jian-zhi-offer.md#13-调整数组顺序使奇数位于偶数前面)
-- [14 链表中倒数第k个结点](jian-zhi-offer.md#14-链表中倒数第k个结点)
-- [15 反转链表](jian-zhi-offer.md#15-反转链表)
-- [16 合并两个排序链表](jian-zhi-offer.md#16-合并两个排序链表)
-- [17 树的子结构](jian-zhi-offer.md#17-树的子结构)
-- [18 二叉树的镜像](jian-zhi-offer.md#18-二叉树的镜像)
-- [19 顺时针打印矩阵](jian-zhi-offer.md#19-顺时针打印矩阵)
-- [20 包含min函数的栈](jian-zhi-offer.md#20-包含min函数的栈)
-- [21 栈的压入、弹出序列](jian-zhi-offer.md#21-栈的压入、弹出序列)
-- [22 从上往下打印二叉树](jian-zhi-offer.md#22-从上往下打印二叉树)
-- [23 二叉搜索树的后序遍历序列](jian-zhi-offer.md#23-二叉搜索树的后序遍历序列)
-- [24 二叉树中和为某一值的路径](jian-zhi-offer.md#24-二叉树中和为某一值的路径)
-- [25 复杂链表的复制](jian-zhi-offer.md#25-复杂链表的复制)
-- [26 二叉搜索树与双向链表](jian-zhi-offer.md#26-二叉搜索树与双向链表)
-- [27 字符串的排列](jian-zhi-offer.md#27-字符串的排列)
-- [28 数组中出现次数超过一半的数字](jian-zhi-offer.md#28-数组中出现次数超过一半的数字)
-- [29 最小的 k 个数](jian-zhi-offer.md#29-最小的k个数)
-- [30 连续子数组的最大和](jian-zhi-offer.md#30-连续子数组的最大和)
-- [31 整数中1出现的次数（从1到n整数中1出现的次数）](jian-zhi-offer.md#31-整数中1出现的次数（从1到n整数中1出现的次数）)
-- [32 把数组排成最小的数](jian-zhi-offer.md#32-把数组排成最小的数)
-- [33 丑数](jian-zhi-offer.md#33-丑数)
-- [34 第一个只出现一次的字符位置](jian-zhi-offer.md#34-第一个只出现一次的字符位置)
-- [35 数组中的逆序对](jian-zhi-offer.md#35-数组中的逆序对)
-- [36 两个链表的第一个公共结点](jian-zhi-offer.md#36-两个链表的第一个公共结点)
-- [37 数字在排序数组中出现的次数](jian-zhi-offer.md#37-数字在排序数组中出现的次数)
-- [38 二叉树的深度](jian-zhi-offer.md#38-二叉树的深度)
-- [39 平衡二叉树](jian-zhi-offer.md#39-平衡二叉树)
-- [40 数组中只出现一次的数字](jian-zhi-offer.md#40-数组中只出现一次的数字)
-- [41 和为S的连续正数序列](jian-zhi-offer.md#41-和为S的连续正数序列)
+- [1 二维数组中的查找](剑指%20Offer%20题解.md#1-二维数组中的查找)
+- [2 替换空格](剑指%20Offer%20题解.md#2-替换空格)
+- [3 从尾到头打印链表](剑指%20Offer%20题解.md#3-从尾到头打印链表)
+- [4 重建二叉树](剑指%20Offer%20题解.md#4-重建二叉树)
+- [5 用两个栈实现队列](剑指%20Offer%20题解.md#5-用两个栈实现队列)
+- [6 旋转数组的最小数字](剑指%20Offer%20题解.md#6-旋转数组的最小数字)
+- [7 斐波那契数列](剑指%20Offer%20题解.md#7-斐波那契数列)
+- [8 跳台阶](剑指%20Offer%20题解.md#8-跳台阶)
+- [9 变态跳台阶](剑指%20Offer%20题解.md#9-变态跳台阶)
+- [10 矩阵覆盖](剑指%20Offer%20题解.md#10-矩阵覆盖)
+- [11 二进制中1的个数](剑指%20Offer%20题解.md#11-二进制中1的个数)
+- [12 数值的整数次方](剑指%20Offer%20题解.md#12-数值的整数次方)
+- [13 调整数组顺序使奇数位于偶数前面](剑指%20Offer%20题解.md#13-调整数组顺序使奇数位于偶数前面)
+- [14 链表中倒数第k个结点](剑指%20Offer%20题解.md#14-链表中倒数第k个结点)
+- [15 反转链表](剑指%20Offer%20题解.md#15-反转链表)
+- [16 合并两个排序链表](剑指%20Offer%20题解.md#16-合并两个排序链表)
+- [17 树的子结构](剑指%20Offer%20题解.md#17-树的子结构)
+- [18 二叉树的镜像](剑指%20Offer%20题解.md#18-二叉树的镜像)
+- [19 顺时针打印矩阵](剑指%20Offer%20题解.md#19-顺时针打印矩阵)
+- [20 包含min函数的栈](剑指%20Offer%20题解.md#20-包含min函数的栈)
+- [21 栈的压入、弹出序列](剑指%20Offer%20题解.md#21-栈的压入、弹出序列)
+- [22 从上往下打印二叉树](剑指%20Offer%20题解.md#22-从上往下打印二叉树)
+- [23 二叉搜索树的后序遍历序列](剑指%20Offer%20题解.md#23-二叉搜索树的后序遍历序列)
+- [24 二叉树中和为某一值的路径](剑指%20Offer%20题解.md#24-二叉树中和为某一值的路径)
+- [25 复杂链表的复制](剑指%20Offer%20题解.md#25-复杂链表的复制)
+- [26 二叉搜索树与双向链表](剑指%20Offer%20题解.md#26-二叉搜索树与双向链表)
+- [27 字符串的排列](剑指%20Offer%20题解.md#27-字符串的排列)
+- [28 数组中出现次数超过一半的数字](剑指%20Offer%20题解.md#28-数组中出现次数超过一半的数字)
+- [29 最小的 k 个数](剑指%20Offer%20题解.md#29-最小的k个数)
+- [30 连续子数组的最大和](剑指%20Offer%20题解.md#30-连续子数组的最大和)
+- [31 整数中1出现的次数（从1到n整数中1出现的次数）](剑指%20Offer%20题解.md#31-整数中1出现的次数（从1到n整数中1出现的次数）)
+- [32 把数组排成最小的数](剑指%20Offer%20题解.md#32-把数组排成最小的数)
+- [33 丑数](剑指%20Offer%20题解.md#33-丑数)
+- [34 第一个只出现一次的字符位置](剑指%20Offer%20题解.md#34-第一个只出现一次的字符位置)
+- [35 数组中的逆序对](剑指%20Offer%20题解.md#35-数组中的逆序对)
+- [36 两个链表的第一个公共结点](剑指%20Offer%20题解.md#36-两个链表的第一个公共结点)
+- [37 数字在排序数组中出现的次数](剑指%20Offer%20题解.md#37-数字在排序数组中出现的次数)
+- [38 二叉树的深度](剑指%20Offer%20题解.md#38-二叉树的深度)
+- [39 平衡二叉树](剑指%20Offer%20题解.md#39-平衡二叉树)
+- [40 数组中只出现一次的数字](剑指%20Offer%20题解.md#40-数组中只出现一次的数字)
+- [41 和为S的连续正数序列](剑指%20Offer%20题解.md#41-和为S的连续正数序列)
+- [42 和为S的两个数字](剑指%20Offer%20题解.md#42-和为S的两个数字)
+- [43 左旋转字符串](剑指%20Offer%20题解.md#43-左旋转字符串)
 
 ## 题册
 
@@ -1689,7 +1691,6 @@ public class Solution {
 > 解法1：利用等差数列求和公式，暴力得到右边界的可能值 
 
 ```java
-import java.util.ArrayList;
 public class Solution {
     public ArrayList<ArrayList<Integer> > FindContinuousSequence(int sum) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
@@ -1712,5 +1713,130 @@ public class Solution {
         }
         return list;
     }
+}
+```
+
+### 42. 和为S的两个数字
+
+#### 题目描述
+
+> 输入一个递增排序的数组和一个数字S，在数组中查找两个数，使得他们的和正好是S，如果有多对数字的和等于S，输出两个数的乘积最小的
+> 
+> 题目链接：[https://www.nowcoder.com/practice/390da4f7a00f44bea7c2f3d19491311b](https://www.nowcoder.com/practice/390da4f7a00f44bea7c2f3d19491311b)
+
+
+```java
+public class Solution {
+    public ArrayList<Integer> FindNumbersWithSum(int [] array,int sum) {
+        int left = 0;
+        int right = array.length - 1;
+        int multiply = Integer.MAX_VALUE;
+        int i = -1;
+        int j = -1;
+        while (left < right) {
+        	int target = array[left] + array[right];
+        	if (target < sum) {
+				left ++;
+			} else if (target > sum) {
+				right --;
+			} else {
+				if (array[left] * array[right] < multiply) {
+					i = left;
+					j = right;
+                    multiply = array[left] * array[right];
+				}
+				left ++;
+				right --;
+			}
+        }
+        if (i == -1) {
+			return new ArrayList<>();
+		}
+        List<Integer> result = Arrays.asList(array[i], array[j]);
+        return new ArrayList<>(result);
+    }
+}
+```
+
+### 43. 左旋转字符串
+
+#### 题目描述
+
+> 汇编语言中有一种移位指令叫做循环左移（ROL），现在有个简单的任务，就是用字符串模拟这个指令的运算结果  
+> 对于一个给定的字符序列S，请你把其循环左移K位后的序列输出  
+> 例如，字符序列S=”abcXYZdef”,要求输出循环左移3位后的结果，即“XYZdefabc”。是不是很简单？OK，搞定它！
+> 
+> 题目链接：[https://www.nowcoder.com/practice/12d959b108cb42b1ab72cef4d36af5ec](https://www.nowcoder.com/practice/12d959b108cb42b1ab72cef4d36af5ec)
+
+#### 解题思路
+
+> 解法：YX = (X<sup>T</sup>Y<sup>T</sup>)<sup>T</sup>
+
+```java
+public class Solution {
+    public String LeftRotateString(String str,int n) {
+        int len = str.length();
+        if (len < n) {
+			return str;
+		}
+        char[] chars = str.toCharArray();
+        reverse(chars, 0, n-1);
+        reverse(chars, n, len-1);
+        reverse(chars, 0, len-1);
+        return String.valueOf(chars);
+    }
+	
+	private void reverse(char [] chars, int low, int high) {
+		char temp;
+		while (low < high) {
+			temp = chars[low];
+			chars[low++] = chars[high];
+			chars[high--] = temp;
+		}
+	}
+}
+```
+
+### 44. 翻转单词顺序列
+
+#### 题目描述
+
+> 牛客最近来了一个新员工Fish，每天早晨总是会拿着一本英文杂志，写些句子在本子上，同事Cat对Fish写的内容颇感兴趣，有一天他向Fish借来翻看，但却读不懂它的意思  
+> 例如，“student. a am I”。后来才意识到，这家伙原来把句子单词的顺序翻转了，正确的句子应该是“I am a student.”。Cat对一一的翻转这些单词顺序可不在行，你能帮助他么？
+> 
+> 题目链接：[https://www.nowcoder.com/practice/3194a4f4cf814f63919d0790578d51f3](https://www.nowcoder.com/practice/3194a4f4cf814f63919d0790578d51f3)
+
+#### 解题思路
+
+> 解法：先翻转整个句子，然后，依次翻转每个单词
+
+```java
+public class Solution {
+    public String ReverseSentence(String str) {
+		if (str == null || "".equals(str)) {
+			return "";
+		}
+		int len = str.length();
+		char[] chars = str.toCharArray();
+		reverse(chars, 0, len-1);
+		int left = 0;
+		for (int i = 0; i < len; i++) {
+			if (chars[i] == ' ') {
+				reverse(chars, left, i-1);
+				left = i+1;
+			}
+		}
+        reverse(chars, left, len-1);
+		return String.valueOf(chars);
+	}
+	
+	private void reverse(char [] chars, int low, int high) {
+		char temp;
+		while (low < high) {
+			temp = chars[low];
+			chars[low++] = chars[high];
+			chars[high--] = temp;
+		}
+	}
 }
 ```
