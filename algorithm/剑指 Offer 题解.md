@@ -14,7 +14,7 @@
 - [10 矩阵覆盖](剑指%20Offer%20题解.md#10-矩阵覆盖)
 - [11 二进制中1的个数](剑指%20Offer%20题解.md#11-二进制中1的个数)
 - [12 数值的整数次方](剑指%20Offer%20题解.md#12-数值的整数次方)
-- [13 调整数组顺序使奇数位于偶数前面](剑指%20Offer%20题解.md#13-调整数组顺序使奇数位于偶数前面)
+- [13 调整数组顺序使奇数位于偶数前面](#13-调整数组顺序使奇数位于偶数前面)
 - [14 链表中倒数第k个结点](剑指%20Offer%20题解.md#14-链表中倒数第k个结点)
 - [15 反转链表](剑指%20Offer%20题解.md#15-反转链表)
 - [16 合并两个排序链表](剑指%20Offer%20题解.md#16-合并两个排序链表)
@@ -45,6 +45,10 @@
 - [41 和为S的连续正数序列](剑指%20Offer%20题解.md#41-和为S的连续正数序列)
 - [42 和为S的两个数字](剑指%20Offer%20题解.md#42-和为S的两个数字)
 - [43 左旋转字符串](剑指%20Offer%20题解.md#43-左旋转字符串)
+- [44 翻转单词顺序列](剑指%20Offer%20题解.md#44-翻转单词顺序列)
+- [45 扑克牌顺子](剑指%20Offer%20题解.md#45-扑克牌顺子)
+- [46 孩子们的游戏(圆圈中最后剩下的数)](#46-孩子们的游戏(圆圈中最后剩下的数))
+- [47 求1+2+3+...+n](#47-求1+2+3+...+n)
 
 ## 题册
 
@@ -1838,5 +1842,186 @@ public class Solution {
 			chars[high--] = temp;
 		}
 	}
+}
+```
+
+### 45. 扑克牌顺子
+
+#### 题目描述
+
+> LL今天心情特别好，因为他去买了一副扑克牌，发现里面居然有2个大王，2个小王(一副牌原本是54张^_^)...  
+> 他随机从中抽出了5张牌，想测测自己的手气，看看能不能抽到顺子，如果抽到的话，他决定去买体育彩票，嘿嘿！！  
+> “红心A，黑桃3，小王，大王，方片5”，“Oh My God!” 不是顺子.....LL不高兴了，他想了想，决定大、小王可以看成任何数字，并且A看作1，J为11，Q为12，K为13  
+> 上面的5张牌就可以变成“1,2,3,4,5”(大小王分别看作2和4),“So Lucky!”。LL决定去买体育彩票啦  
+> 现在，要求你使用这幅牌模拟上面的过程，然后告诉我们LL的运气如何， 如果牌能组成顺子就输出true，否则就输出false。为了方便起见,你可以认为大小王是0。
+> 
+> 题目链接：[https://www.nowcoder.com/practice/762836f4d43d43ca9deb273b3de8e1f4](https://www.nowcoder.com/practice/762836f4d43d43ca9deb273b3de8e1f4)
+
+#### 解题思路
+
+> 解法1：
+>   1. 排序
+>   2. 计算所有相邻数字间隔总数
+>   3. 计算 0 的个数
+>   4. 如果2、3相等，就是顺子
+>   5. 如果出现对子，则不是顺子
+
+```java
+public class Solution {
+    public String ReverseSentence(String str) {
+		if (str == null || "".equals(str)) {
+			return "";
+		}
+		int len = str.length();
+		char[] chars = str.toCharArray();
+		reverse(chars, 0, len-1);
+		int left = 0;
+		for (int i = 0; i < len; i++) {
+			if (chars[i] == ' ') {
+				reverse(chars, left, i-1);
+				left = i+1;
+			}
+		}
+        reverse(chars, left, len-1);
+		return String.valueOf(chars);
+	}
+	
+	private void reverse(char [] chars, int low, int high) {
+		char temp;
+		while (low < high) {
+			temp = chars[low];
+			chars[low++] = chars[high];
+			chars[high--] = temp;
+		}
+	}
+}
+```
+
+> 解法2：
+>   1. max - min < 5
+>   2. 除0外没有重复的数字
+
+``` java
+public class Solution {
+    public boolean isContinuous(int [] numbers) {
+        int zero_num = 0;
+        int len = numbers.length - 1;
+        if (len == -1) {
+            return false;
+        }
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        int [] diff = new int[14];
+        for (int i = 0; i < len; i++) {
+            diff[numbers[i]]++;
+            if (numbers[i] == 0) {
+                zero_num++;
+                continue;
+            }
+            if (diff[numbers[i]] > 1) {
+                return false;
+            }
+            max = Math.max(numbers[i], max);
+            min = Math.min(numbers[i], min);
+        }
+        if (max - min >= 5) {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+### 46. 孩子们的游戏(圆圈中最后剩下的数)
+
+#### 题目描述
+
+> 每年六一儿童节，牛客都会准备一些小礼物去看望孤儿院的小朋友，今年亦是如此。HF作为牛客的资深元老，自然也准备了一些小游戏  
+> 其中，有个游戏是这样的：首先，让小朋友们围成一个大圈。然后，他随机指定一个数m，让编号为0的小朋友开始报数。每次喊到m-1的那个小朋友要出列唱首歌，然后可以在礼品箱中任意的挑选礼物，并且不再回到圈中，从他的下一个小朋友开始，继续0...m-1报数  
+> 这样下去，直到剩下最后一个小朋友，可以不用表演，并且拿到牛客名贵的“名侦探柯南”典藏版(名额有限哦!!^_^)。请你试着想下，哪个小朋友会得到这份礼品呢？(注：小朋友的编号是从0到n-1)
+> 
+> 题目链接：[https://www.nowcoder.com/practice/f78a359491e64a50bce2d89cff857eb6](https://www.nowcoder.com/practice/f78a359491e64a50bce2d89cff857eb6)
+
+#### 解题思路
+
+> 1. 约瑟夫环公式解法
+> 2. 模拟
+> 3. 利用 LinkedList 简化模拟
+
+``` java
+/* 解法1：约瑟夫环公式 */
+public class Solution {
+    public int LastRemaining_Solution(int n, int m) {
+        if (n == 0) {
+            return -1;
+        } else if (n == 1) {
+            return 0;
+        } else {
+            return (LastRemaining_Solution(n-1, m) + m) % n;
+        }
+    }
+}
+
+/* 解法2：模拟 */
+public class Solution {
+    public int LastRemaining_Solution(int n, int m) {
+        if (n < 1 || m < 1) return -1;
+        int[] arr = new int[n];
+        int i = -1, step = 0, count = n;
+        while (count > 0) {
+            i++;
+            if (i >= n) {
+                i = 0;  // 模拟环
+            }
+            if (arr[i] == -1) {
+                continue;  // 跳过删除的节点
+            }
+            step++;
+            if (step == m) {
+                arr[i] = -1;
+                step = 0;
+                count--;
+            }
+        }
+        return i;
+    }
+}
+
+/* 解法3：利用 LinkedList 简化模拟 */
+public class Solution {
+    public int LastRemaining_Solution(int n, int m) {
+        LinkedList<Integer> list = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            list.add(i);
+        }
+        int step = 0;
+        while (list.size() > 1) {
+            step = (step + m - 1) % list.size();
+            list.remove(step);
+        }
+        return list.size() == 1 ? list.get(0) : -1;
+    }
+}
+```
+
+### 47. 求1+2+3+...+n
+
+#### 题目描述
+
+> 求1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A ? B : C）  
+> 
+> 题目链接：[https://www.nowcoder.com/practice/7a0da8fc483247ff8800059e12d7caf1](https://www.nowcoder.com/practice/7a0da8fc483247ff8800059e12d7caf1)
+
+#### 解题思路
+
+> 需利用逻辑与的短路特性实现递归终止
+
+``` java
+public class Solution {
+    public int Sum_Solution(int n) {
+        int res = n;
+        boolean t = (res > 0) && ((res += Sum_Solution(n - 1)) > 0);
+        return res;
+    }
 }
 ```
