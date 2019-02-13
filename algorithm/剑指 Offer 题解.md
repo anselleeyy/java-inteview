@@ -49,6 +49,10 @@
 - [45 扑克牌顺子](#45-扑克牌顺子)
 - [46 孩子们的游戏(圆圈中最后剩下的数)](#46-孩子们的游戏圆圈中最后剩下的数)
 - [47 求1+2+3+...+n](#47-求123n)
+- [48 不用加减乘除做加法](#48-不用加减乘除做加法)
+- [49 把字符串转换成整数](#49-把字符串转换成整数)
+- [50 数组中重复的数字](#50-数组中重复的数字)
+- [51 构建乘积数组](#51-构建乘积数组)
 
 ## 题册
 
@@ -2022,6 +2026,175 @@ public class Solution {
         int res = n;
         boolean t = (res > 0) && ((res += Sum_Solution(n - 1)) > 0);
         return res;
+    }
+}
+```
+
+### 48. 不用加减乘除做加法
+
+#### 题目描述
+
+> 写一个函数，求两个整数之和，要求在函数体内不得使用+、-、*、/四则运算符号。  
+> 
+> 题目链接：[https://www.nowcoder.com/practice/59ac416b4b944300b617d4f7f111b215](https://www.nowcoder.com/practice/59ac416b4b944300b617d4f7f111b215)
+
+#### 解题思路
+
+1. 两个数异或：相当于每一位相加，而不考虑进位
+2. 两个数相与，并左移一位：相当于求得进位
+3. 将上述两步的结果相加
+
+``` java
+public class Solution {
+    public int Add(int num1,int num2) {
+        if (num2 == 0) {
+            return num1;
+        }
+        int sum = num1 ^ num2;
+        int carry = (num1 & num2) << 1;
+        return Add(sum, carry);
+    }
+}
+```
+
+### 49. 把字符串转换成整数
+
+#### 题目描述
+
+> 将一个字符串转换成一个整数(实现Integer.valueOf(string)的功能，但是string不符合数字要求时返回0)，要求不能使用字符串转换整数的库函数  
+> 数值为0或者字符串不是一个合法的数值则返回0
+> 
+> 题目链接：[https://www.nowcoder.com/practice/1277c681251b4372bdef344468e4f26e](https://www.nowcoder.com/practice/1277c681251b4372bdef344468e4f26e)
+
+#### 解题思路
+
+> 传统方法遍历字符数组即可，注意溢出和非法符号的处理
+
+``` java
+public class Solution {
+    public int StrToInt(String str) {
+        if (str == null || "".equals(str.trim())) {
+			return 0;
+		}
+		
+		int symbol = 0;
+		int left = 0;
+		
+		char[] chars = str.toCharArray();
+		if (chars[left] == '+' || chars[left] == '-') {
+			symbol = chars[left] == '+' ? 0 : 1;
+			left++;
+		}
+		int result = 0;
+		for (int i = left; i < chars.length; i++) {
+			if (chars[i] > '9' || chars[i] < '0') {
+				return 0;
+			}
+			if (result < 0) {
+				return 0;
+			}
+			result = result * 10 + (int) (chars[i] - '0');
+			System.out.println(result);
+		}
+		result = (int) Math.pow(-1, symbol) * result;
+		return result;
+    }
+}
+```
+
+### 50. 数组中重复的数字
+
+#### 题目描述
+
+> 在一个长度为n的数组里的所有数字都在0到n-1的范围内  
+> 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字  
+> 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是第一个重复的数字2
+> 
+> 题目链接：[https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8](https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8)
+
+#### 解题思路
+
+1. 把当前序列当成是一个下标和下标对应值是相同的数组
+2. 遍历数组，判断当前位的值和下标是否相等
+   1. 若相等，则遍历下一位
+   2. 若不等，则将当前位置i上的元素和a[i]位置上的元素比较
+      1. 若它们相等，则成功
+      2. 若不等，则将它们两交换
+   3. 换完之后a[i]位置上的值和它的下标是对应的，但i位置上的元素和下标并不一定对应
+   4. 重复2.2的操作，直到当前位置i的值也为i，将i向后移一位，再重复2
+
+``` java
+public class Solution {
+    // Parameters:
+    //    numbers:     an array of integers
+    //    length:      the length of array numbers
+    //    duplication: (Output) the duplicated number in the array number,length of duplication array is 1,so using duplication[0] = ? in implementation;
+    //                  Here duplication like pointor in C/C++, duplication[0] equal *duplication in C/C++
+    //    这里要特别注意~返回任意重复的一个，赋值duplication[0]
+    // Return value:       true if the input is valid, and there are some duplications in the array number
+    //                     otherwise false
+    public boolean duplicate(int array[], int length, int[] duplication) {
+		if (array == null || array.length != length) {
+			return false;
+		}
+		for (int i = 0; i < length; i++) {
+			if (array[i] < 0 || array[i] >= length) {
+				return false;
+			}
+			while (array[i] != i) {
+				if (array[i] == array[array[i]]) {
+					duplication[0] = array[i];
+					System.out.println(duplication[0]);
+					return true;
+				}
+				swap(array, i, array[i]);
+			}
+		}
+		System.out.println(false);
+		return false;
+	}
+	
+	private void swap(int[] array, int i, int j) {
+		int temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
+	}
+}
+```
+
+### 51. 构建乘积数组
+
+#### 题目描述
+
+> 给定一个数组A[0,1,...,n-1],请构建一个数组B[0,1,...,n-1],其中B中的元素B[i]=A[0]*A[1]*...*A[i-1]*A[i+1]*...*A[n-1]。不能使用除法
+> 
+> 题目链接：[https://www.nowcoder.com/practice/94a4d381a68b47b7a8bed86f2975db46](https://www.nowcoder.com/practice/94a4d381a68b47b7a8bed86f2975db46)
+
+#### 解题思路
+
+> 对于第一个for循环  
+> 第一步：b[0] = 1  
+> 第二步：b[1] = b[0] * a[0] = a[0]  
+> 第三步：b[2] = b[1] * a[1] = a[0] * a[1] ...  
+> 对于第二个for循环  
+> 第一步：temp = 1  
+> 第二步：b[4] = b[4] * temp; temp *= a[4]  
+> 第三步：b[3] *= temp; temp *= a[3] ...  
+
+``` java
+public class Solution {
+    public int[] multiply(int[] A) {
+        int[] B = new int[A.length];
+		B[0] = 1;
+		for (int i = 1; i < A.length; i++) {
+			B[i] = B[i-1] * A[i-1];
+		}
+		int temp = 1;
+		for (int i = A.length-1; i >= 0; i--) {
+			B[i] *= temp;
+			temp *= A[i];
+		}
+		return B;
     }
 }
 ```
