@@ -53,6 +53,8 @@
 - [49 把字符串转换成整数](#49-把字符串转换成整数)
 - [50 数组中重复的数字](#50-数组中重复的数字)
 - [51 构建乘积数组](#51-构建乘积数组)
+- [53 表示数值的字符串](#53-表示数值的字符串)
+- [64 滑动窗口的最大值](#64-滑动窗口的最大值)
 
 ## 题册
 
@@ -1326,25 +1328,23 @@ import java.util.Comparator;
 public class Solution {
     public String PrintMinNumber(int [] numbers) {
         List<Integer> list = new ArrayList<>();
-		for (int num : numbers) {
-			list.add(num);
-		}
-		Collections.sort(list, new Comparator<Integer>() {
-
-			@Override
-			public int compare(Integer o1, Integer o2) {
-				// TODO Auto-generated method stub
-				String a = o1 + "" + o2;
-				String b = o2 + "" + o1;
-				return a.compareTo(b);
-			}
-			
-		});
-		String string = "";
-		for (Integer integer : list) {
-			string += integer;
-		}
-		return string;
+        for (int num : numbers) {
+            list.add(num);
+        }
+        Collections.sort(list, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+            // TODO Auto-generated method stub
+                String a = o1 + "" + o2;
+                String b = o2 + "" + o1;
+                return a.compareTo(b);
+            }
+        });
+        String string = "";
+        for (Integer integer : list) {
+            string += integer;
+        }
+        return string;
     }
 }
 ```
@@ -1742,24 +1742,24 @@ public class Solution {
         int i = -1;
         int j = -1;
         while (left < right) {
-        	int target = array[left] + array[right];
-        	if (target < sum) {
-				left ++;
-			} else if (target > sum) {
-				right --;
-			} else {
-				if (array[left] * array[right] < multiply) {
-					i = left;
-					j = right;
+            int target = array[left] + array[right];
+            if (target < sum) {
+                left ++;
+            } else if (target > sum) {
+                right --;
+            } else {
+                if (array[left] * array[right] < multiply) {
+                    i = left;
+                    j = right;
                     multiply = array[left] * array[right];
-				}
-				left ++;
-				right --;
-			}
+                }
+                left ++;
+                right --;
+            }
         }
         if (i == -1) {
-			return new ArrayList<>();
-		}
+            return new ArrayList<>();
+        }
         List<Integer> result = Arrays.asList(array[i], array[j]);
         return new ArrayList<>(result);
     }
@@ -1785,8 +1785,8 @@ public class Solution {
     public String LeftRotateString(String str,int n) {
         int len = str.length();
         if (len < n) {
-			return str;
-		}
+            return str;
+        }
         char[] chars = str.toCharArray();
         reverse(chars, 0, n-1);
         reverse(chars, n, len-1);
@@ -1795,13 +1795,13 @@ public class Solution {
     }
 	
 	private void reverse(char [] chars, int low, int high) {
-		char temp;
-		while (low < high) {
-			temp = chars[low];
-			chars[low++] = chars[high];
-			chars[high--] = temp;
-		}
-	}
+        char temp;
+        while (low < high) {
+            temp = chars[low];
+            chars[low++] = chars[high];
+            chars[high--] = temp;
+        }
+    }
 }
 ```
 
@@ -1821,31 +1821,31 @@ public class Solution {
 ```java
 public class Solution {
     public String ReverseSentence(String str) {
-		if (str == null || "".equals(str)) {
-			return "";
-		}
-		int len = str.length();
-		char[] chars = str.toCharArray();
-		reverse(chars, 0, len-1);
-		int left = 0;
-		for (int i = 0; i < len; i++) {
-			if (chars[i] == ' ') {
-				reverse(chars, left, i-1);
-				left = i+1;
-			}
-		}
+        if (str == null || "".equals(str)) {
+            return "";
+        }
+        int len = str.length();
+        char[] chars = str.toCharArray();
+        reverse(chars, 0, len-1);
+        int left = 0;
+        for (int i = 0; i < len; i++) {
+            if (chars[i] == ' ') {
+                reverse(chars, left, i-1);
+                left = i+1;
+            }
+        }
         reverse(chars, left, len-1);
-		return String.valueOf(chars);
-	}
+        return String.valueOf(chars);
+    }
 	
-	private void reverse(char [] chars, int low, int high) {
-		char temp;
-		while (low < high) {
-			temp = chars[low];
-			chars[low++] = chars[high];
-			chars[high--] = temp;
-		}
-	}
+    private void reverse(char [] chars, int low, int high) {
+        char temp;
+        while (low < high) {
+            temp = chars[low];
+            chars[low++] = chars[high];
+            chars[high--] = temp;
+        }
+    }
 }
 ```
 
@@ -1873,31 +1873,31 @@ public class Solution {
 ```java
 public class Solution {
     public String ReverseSentence(String str) {
-		if (str == null || "".equals(str)) {
-			return "";
-		}
-		int len = str.length();
-		char[] chars = str.toCharArray();
-		reverse(chars, 0, len-1);
-		int left = 0;
-		for (int i = 0; i < len; i++) {
-			if (chars[i] == ' ') {
-				reverse(chars, left, i-1);
-				left = i+1;
-			}
-		}
+        if (str == null || "".equals(str)) {
+            return "";
+        }
+        int len = str.length();
+        char[] chars = str.toCharArray();
+        reverse(chars, 0, len-1);
+        int left = 0;
+        for (int i = 0; i < len; i++) {
+            if (chars[i] == ' ') {
+                reverse(chars, left, i-1);
+                left = i+1;
+            }
+        }
         reverse(chars, left, len-1);
-		return String.valueOf(chars);
-	}
+        return String.valueOf(chars);
+    }
 	
-	private void reverse(char [] chars, int low, int high) {
-		char temp;
-		while (low < high) {
-			temp = chars[low];
-			chars[low++] = chars[high];
-			chars[high--] = temp;
-		}
-	}
+    private void reverse(char [] chars, int low, int high) {
+        char temp;
+        while (low < high) {
+            temp = chars[low];
+            chars[low++] = chars[high];
+            chars[high--] = temp;
+        }
+    }
 }
 ```
 
@@ -2074,30 +2074,30 @@ public class Solution {
 public class Solution {
     public int StrToInt(String str) {
         if (str == null || "".equals(str.trim())) {
-			return 0;
-		}
+            return 0;
+        }
 		
-		int symbol = 0;
-		int left = 0;
+        int symbol = 0;
+        int left = 0;
 		
-		char[] chars = str.toCharArray();
-		if (chars[left] == '+' || chars[left] == '-') {
-			symbol = chars[left] == '+' ? 0 : 1;
-			left++;
-		}
-		int result = 0;
-		for (int i = left; i < chars.length; i++) {
-			if (chars[i] > '9' || chars[i] < '0') {
-				return 0;
-			}
-			if (result < 0) {
-				return 0;
-			}
-			result = result * 10 + (int) (chars[i] - '0');
-			System.out.println(result);
-		}
-		result = (int) Math.pow(-1, symbol) * result;
-		return result;
+        char[] chars = str.toCharArray();
+        if (chars[left] == '+' || chars[left] == '-') {
+            symbol = chars[left] == '+' ? 0 : 1;
+            left++;
+        }
+        int result = 0;
+        for (int i = left; i < chars.length; i++) {
+            if (chars[i] > '9' || chars[i] < '0') {
+                return 0;
+            }
+            if (result < 0) {
+                return 0;
+            }
+            result = result * 10 + (int) (chars[i] - '0');
+            System.out.println(result);
+        }
+        result = (int) Math.pow(-1, symbol) * result;
+        return result;
     }
 }
 ```
@@ -2134,31 +2134,31 @@ public class Solution {
     // Return value:       true if the input is valid, and there are some duplications in the array number
     //                     otherwise false
     public boolean duplicate(int array[], int length, int[] duplication) {
-		if (array == null || array.length != length) {
-			return false;
-		}
-		for (int i = 0; i < length; i++) {
-			if (array[i] < 0 || array[i] >= length) {
-				return false;
-			}
-			while (array[i] != i) {
-				if (array[i] == array[array[i]]) {
-					duplication[0] = array[i];
-					System.out.println(duplication[0]);
-					return true;
-				}
-				swap(array, i, array[i]);
-			}
-		}
-		System.out.println(false);
-		return false;
-	}
+        if (array == null || array.length != length) {
+            return false;
+        }
+        for (int i = 0; i < length; i++) {
+            if (array[i] < 0 || array[i] >= length) {
+                return false;
+            }
+            while (array[i] != i) {
+                if (array[i] == array[array[i]]) {
+                    duplication[0] = array[i];
+                    System.out.println(duplication[0]);
+                    return true;
+            	}
+                swap(array, i, array[i]);
+            }
+        }
+        System.out.println(false);
+        return false;
+    }
 	
-	private void swap(int[] array, int i, int j) {
-		int temp = array[i];
-		array[i] = array[j];
-		array[j] = temp;
-	}
+    private void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
 }
 ```
 
@@ -2185,16 +2185,16 @@ public class Solution {
 public class Solution {
     public int[] multiply(int[] A) {
         int[] B = new int[A.length];
-		B[0] = 1;
-		for (int i = 1; i < A.length; i++) {
-			B[i] = B[i-1] * A[i-1];
-		}
-		int temp = 1;
-		for (int i = A.length-1; i >= 0; i--) {
-			B[i] *= temp;
-			temp *= A[i];
-		}
-		return B;
+        B[0] = 1;
+        for (int i = 1; i < A.length; i++) {
+            B[i] = B[i-1] * A[i-1];
+        }
+        int temp = 1;
+        for (int i = A.length-1; i >= 0; i--) {
+            B[i] *= temp;
+            temp *= A[i];
+        }
+        return B;
     }
 }
 ```
@@ -2220,30 +2220,80 @@ public class Solution {
 public class Solution {
     public boolean isNumeric(char[] str) {
         boolean sign 	= false;
-		boolean decimal = false;
-		boolean hasE 	= false;
+        boolean decimal = false;
+        boolean hasE 	= false;
 		
-		for (int i = 0; i < str.length; i++) {
-			if (str[i] == 'e' || str[i] == 'E') {
-				if (i == str.length - 1 || hasE) {
-					return false;
-				}
-				hasE = true;
-			} else if (str[i] == '+' || str[i] == '-') {
-				if ((sign || (!sign && i > 0)) && str[i-1] != 'e' && str[i-1] != 'E') {
-					return false;
-				}
-				sign = true;
-			} else if (str[i] == '.') {
-				if (hasE || decimal) {
-					return false;
-				}
-				decimal = true;
-			} else if (!Character.isDigit(str[i])) {
-				return false;
-			}
-		}
-		return true;
+        for (int i = 0; i < str.length; i++) {
+            if (str[i] == 'e' || str[i] == 'E') {
+                if (i == str.length - 1 || hasE) {
+                    return false;
+                }
+                hasE = true;
+            } else if (str[i] == '+' || str[i] == '-') {
+                if ((sign || (!sign && i > 0)) && str[i-1] != 'e' && str[i-1] != 'E') {
+                    return false;
+                }
+                sign = true;
+            } else if (str[i] == '.') {
+                if (hasE || decimal) {
+                    return false;
+                }
+                decimal = true;
+            } else if (!Character.isDigit(str[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```
+
+### 64. 滑动窗口的最大值
+
+#### 题目描述
+
+> 给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值  
+> 例如，如果输入数组{2,3,4,2,6,2,5,1}及滑动窗口的大小3，那么一共存在6个滑动窗口，他们的最大值分别为{4,4,6,6,6,5}； 针对数组{2,3,4,2,6,2,5,1}的滑动窗口有以下6个： {[2,3,4],2,6,2,5,1}， {2,[3,4,2],6,2,5,1}， {2,3,[4,2,6],2,5,1}， {2,3,4,[2,6,2],5,1}， {2,3,4,2,[6,2,5],1}， {2,3,4,2,6,[2,5,1]}  
+> 例如，字符串"+100","5e2","-123","3.1416"和"-1E-16"都表示数值，但是"12e","1a3.14","1.2.3","+-5"和"12e+4.3"都不是  
+> 
+> 题目链接：[https://www.nowcoder.com/practice/1624bc35a45c42c0bc17d17fa0cba788](https://www.nowcoder.com/practice/1624bc35a45c42c0bc17d17fa0cba788)
+
+#### 解题思路
+
+> 滑动窗口应当是队列，但为了得到滑动窗口的最大值，队列序可以从两端删除元素，因此使用双端队列
+> 原则：对新来的元素k，将其与双端队列中的元素相比较
+> 1. 从队尾开始遍历，比k小的，直接移出队列（因为不再可能成为后面滑动窗口的最大值了）,
+> 2. 判断队头元素是否已不在窗口之内，不在的直接移出队列
+> 3. 队列的第一个元素是滑动窗口中的最大值
+
+``` java
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+public class Solution {
+    public ArrayList<Integer> maxInWindows(int [] num, int size) {
+        if (num == null || num.length == 0 || size == 0) {
+            return new ArrayList<Integer>();
+        }
+        ArrayList<Integer> result = new ArrayList<>();
+        LinkedList<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < num.length; i++) {
+            while (!queue.isEmpty() && num[i] > num[queue.peekLast()]) {
+                queue.pollLast();
+            }
+            queue.addLast(i);
+			
+            // 判断是否有过期元素
+            if (queue.peekFirst() == (i - size)) {
+                queue.pollFirst();
+            }
+			
+            // 将最大值加入结果集
+            if (i >= (size - 1)) {
+                result.add(num[queue.peekFirst()]);
+            }
+        }
+        return result;
     }
 }
 ```
