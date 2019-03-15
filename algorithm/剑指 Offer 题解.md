@@ -54,6 +54,10 @@
 - [50 数组中重复的数字](#50-数组中重复的数字)
 - [51 构建乘积数组](#51-构建乘积数组)
 - [53 表示数值的字符串](#53-表示数值的字符串)
+- [54 字符流中第一个不重复的字符](#54-字符流中第一个不重复的字符)
+- [57 二叉树的下一个结点](#57-二叉树的下一个结点)
+- [58 对称的二叉树](#58-对称的二叉树)
+- [60 把二叉树打印成多行](#60-把二叉树打印成多行)
 - [64 滑动窗口的最大值](#64-滑动窗口的最大值)
 
 ## 题册
@@ -1148,23 +1152,23 @@ public class Solution {
     // 快排 partition 思想
     public ArrayList<Integer> GetLeastNumbers_Solution(int [] input, int k) {
         ArrayList<Integer> list = new ArrayList<>();
-        if(input == null || input.length == 0 || k <= 0 || k > input.length){
-             return list;
-         }
+        if (input == null || input.length == 0 || k <= 0 || k > input.length) {
+            return list;
+        }
         int start = 0;
         int end = input.length-1;
         
         int index = partition(input, start, end);
-         while(index != k-1){
-             if(index > k-1){
-                 end = index - 1;
-                 index = partition(input, start, end);
-             }
-             else{
-                 start = index + 1;
-                 index = partition(input, start, end);
-             }
-         }
+        while (index != k-1) {
+            if (index > k-1) {
+                end = index - 1;
+                index = partition(input, start, end);
+            }
+            else {
+                start = index + 1;
+                index = partition(input, start, end);
+            }
+        }
         
         for (int i = 0; i < k; i++) {
             list.add(input[i]);
@@ -1174,8 +1178,8 @@ public class Solution {
     
     private int partition(int[] arr, int left, int right) {
         if(arr == null || arr.length == 0 || left < 0 || right >= arr.length){
-             return -1;
-         }
+            return -1;
+        }
         int pivot = arr[left];
         while (left < right) {
             while (arr[right] >= pivot && left < right) right--;
@@ -1794,7 +1798,7 @@ public class Solution {
         return String.valueOf(chars);
     }
 	
-	private void reverse(char [] chars, int low, int high) {
+    private void reverse(char [] chars, int low, int high) {
         char temp;
         while (low < high) {
             temp = chars[low];
@@ -2245,6 +2249,148 @@ public class Solution {
         }
         return true;
     }
+}
+```
+
+### 54. 字符流中第一个不重复的字符
+
+#### 题目描述
+
+> 请实现一个函数用来找出字符流中第一个只出现一次的字符；如果当前字符流没有存在出现一次的字符，返回#字符  
+> 例如，当从字符流中只读出前两个字符"go"时，第一个只出现一次的字符是"g"。当从该字符流中读出前六个字符“google"时，第一个只出现一次的字符是"l"
+> 
+> 题目链接：[https://www.nowcoder.com/practice/00de97733b8e4f97a3fb5c680ee10720](https://www.nowcoder.com/practice/00de97733b8e4f97a3fb5c680ee10720)
+
+#### 解题思路
+
+> 利用一个alpha数组进行存储字符是否出现过
+
+``` java
+import java.util.List;
+import java.util.ArrayList;
+
+public class Solution {
+    
+    private List<Character> list = new ArrayList<>();
+    
+    private int[] alpha = new int[256];
+    
+    //Insert one char from stringstream
+    public void Insert(char ch)
+    {
+        if (alpha[ch] == 0) {
+            list.add(ch);
+            alpha[ch] = 1;
+        } else {
+            list.remove((Character) ch);
+        }
+    }
+
+    //return the first appearence once char in current stringstream
+    public char FirstAppearingOnce()
+    {
+        if (list.size() != 0) {
+            return list.get(0);
+        }
+        return '#';
+    }
+}
+```
+
+### 57. 二叉树的下一个结点
+
+#### 题目描述
+
+> 给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针  
+> 
+> 题目链接：[https://www.nowcoder.com/practice/9023a0c988684a53960365b889ceaf5e](https://www.nowcoder.com/practice/9023a0c988684a53960365b889ceaf5e)
+
+#### 解题思路
+
+> 注意题目中二叉树结构中的next指针是指向父节点的指针
+
+```java
+public class Solution {
+    public TreeLinkNode GetNext(TreeLinkNode pNode)
+    {
+        if (pNode == null) {
+        return null;
+        }
+        
+        if (pNode.right != null) {
+            pNode = pNode.right;
+            while (pNode.left != null) {
+                pNode = pNode.left;
+            }
+            return pNode;
+        }
+        
+        while (pNode.next != null) {
+            TreeLinkNode node = pNode.next;
+            if (node.left == pNode) {
+                return node;
+            }
+            pNode = node;
+        }
+        return null;
+    }
+}
+```
+
+### 58. 对称的二叉树
+
+#### 题目描述
+
+> 请实现一个函数，用来判断一颗二叉树是不是对称的。注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的
+> 
+> 题目链接：[https://www.nowcoder.com/practice/ff05d44dfdb04e1d83bdbdab320efbcb](https://www.nowcoder.com/practice/ff05d44dfdb04e1d83bdbdab320efbcb)
+
+```java
+public class Solution {
+    boolean isSymmetrical(TreeNode pRoot)
+    {
+        if (pRoot == null) return true;
+        return compare_root(pRoot.left, pRoot.right);
+    }
+    
+    boolean compare_root(TreeNode left, TreeNode right) {
+        if (left == null) return right == null;
+        if (right == null) return false;
+        if (left.val != right.val) return false;
+        return compare_root(left.right, right.left) && compare_root(left.left, right.right);
+    }
+}
+```
+
+### 60. 把二叉树打印成多行
+
+#### 题目描述
+
+> 从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行
+> 
+> 题目链接：[https://www.nowcoder.com/practice/445c44d982d04483b04a54f298796288](https://www.nowcoder.com/practice/445c44d982d04483b04a54f298796288)
+
+``` java
+public class Solution {
+    private ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+	
+	ArrayList<ArrayList<Integer> > Print(TreeNode pRoot) {
+	    depth(pRoot, 1);
+	    return result;
+    }
+	
+	private void depth(TreeNode root, int depth) {
+		if (root == null) {
+			return;
+		}
+		if (depth > result.size()) {
+			result.add(new ArrayList<>());
+		}
+		result.get(depth-1).add(root.val);
+		depth(root.left, depth+1);
+		depth(root.right, depth+1);
+	}
+    
 }
 ```
 
