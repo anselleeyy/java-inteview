@@ -57,6 +57,7 @@
 - [54 字符流中第一个不重复的字符](#54-字符流中第一个不重复的字符)
 - [57 二叉树的下一个结点](#57-二叉树的下一个结点)
 - [58 对称的二叉树](#58-对称的二叉树)
+- [59 按之字形顺序打印二叉树](#59-按之字形顺序打印二叉树)
 - [60 把二叉树打印成多行](#60-把二叉树打印成多行)
 - [64 滑动窗口的最大值](#64-滑动窗口的最大值)
 
@@ -2135,8 +2136,7 @@ public class Solution {
     //    duplication: (Output) the duplicated number in the array number,length of duplication array is 1,so using duplication[0] = ? in implementation;
     //                  Here duplication like pointor in C/C++, duplication[0] equal *duplication in C/C++
     //    这里要特别注意~返回任意重复的一个，赋值duplication[0]
-    // Return value:       true if the input is valid, and there are some duplications in the array number
-    //                     otherwise false
+    //    Return value: true if the input is valid, and there are some duplications in the array number otherwise false
     public boolean duplicate(int array[], int length, int[] duplication) {
         if (array == null || array.length != length) {
             return false;
@@ -2362,6 +2362,61 @@ public class Solution {
 }
 ```
 
+### 59. 按之字形顺序打印二叉树
+
+#### 题目描述
+
+> 请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推
+> 
+> 题目链接：[https://www.nowcoder.com/practice/91b69814117f4e8097390d107d2efbe0](https://www.nowcoder.com/practice/91b69814117f4e8097390d107d2efbe0)
+
+``` java
+public class Solution {
+    public ArrayList<ArrayList<Integer> > Print(TreeNode pRoot) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+		if (pRoot == null) {
+			return result;
+		}
+		LinkedList<TreeNode> queue = new LinkedList<>();
+		queue.addLast(null); // 层分隔符
+		queue.addLast(pRoot);
+		boolean leftToRight = true;
+		
+		while (queue.size() != 1) {
+			TreeNode node = queue.removeFirst();
+			// 判断是否到达层分隔符
+			if (node == null) {
+				ArrayList<Integer> list = new ArrayList<>();
+				Iterator<TreeNode> iterator = null;
+				if (leftToRight) {
+					iterator = queue.iterator();  // 正序遍历
+				} else {
+					iterator = queue.descendingIterator();  // 逆序遍历
+				}
+				leftToRight = !leftToRight;
+				while (iterator.hasNext()) {
+					TreeNode temp = iterator.next();
+					list.add(temp.val);
+				}
+				result.add(list);
+				queue.addLast(null);
+				continue;
+			}
+			if (node.left != null) {
+				queue.addLast(node.left);
+			}
+			if (node.right != null) {
+				queue.addLast(node.right);
+			}
+		}
+		
+		return result;
+		
+    }
+
+}
+```
+
 ### 60. 把二叉树打印成多行
 
 #### 题目描述
@@ -2374,23 +2429,60 @@ public class Solution {
 public class Solution {
     private ArrayList<ArrayList<Integer>> result = new ArrayList<>();
 	
-	ArrayList<ArrayList<Integer> > Print(TreeNode pRoot) {
-	    depth(pRoot, 1);
-	    return result;
+    ArrayList<ArrayList<Integer> > Print(TreeNode pRoot) {
+        depth(pRoot, 1);
+        return result;
     }
 	
-	private void depth(TreeNode root, int depth) {
-		if (root == null) {
-			return;
-		}
-		if (depth > result.size()) {
-			result.add(new ArrayList<>());
-		}
-		result.get(depth-1).add(root.val);
-		depth(root.left, depth+1);
-		depth(root.right, depth+1);
-	}
-    
+    private void depth(TreeNode root, int depth) {
+        if (root == null) {
+            return;
+        }
+        if (depth > result.size()) {
+            result.add(new ArrayList<>());
+        }
+        result.get(depth-1).add(root.val);
+        depth(root.left, depth+1);
+        depth(root.right, depth+1);
+    } 
+}
+```
+
+### 61. 序列化二叉树
+
+#### 题目描述
+
+> 请实现两个函数，分别用来序列化和反序列化二叉树
+
+``` java
+/**
+ * 序列化就是通过先序遍历的方式，将节点拼接成一个字符串，通过逗号分隔，遇到 null 用 '#' 表示
+ * 反序列化就是将拼接的字符串重新生成一个二叉树
+ */
+public class Solution {
+    int index = -1;
+    String Serialize(TreeNode root) {
+        StringBuilder string = new StringBuilder();
+        if (root == null) {
+            string.append("#,");
+            return string.toString();
+        }
+        string.append(root.val + ",");
+        string.append(Serialize(root.left));
+        string.append(Serialize(root.right));
+        return string.toString();
+    }
+    TreeNode Deserialize(String str) {
+        index++;
+        String[] strings = str.split(",");
+        TreeNode node = null;
+        if (!"#".equals(strings[index])) {
+            node = new TreeNode(Integer.valueOf(strings[index]));
+            node.left = Deserialize(str);
+            node.right = Deserialize(str);
+        }
+        return node;
+    }
 }
 ```
 
