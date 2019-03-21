@@ -55,10 +55,14 @@
 - [51 构建乘积数组](#51-构建乘积数组)
 - [53 表示数值的字符串](#53-表示数值的字符串)
 - [54 字符流中第一个不重复的字符](#54-字符流中第一个不重复的字符)
+- [55 链表中环的入口结点](#55-链表中环的入口结点)
+- [56 删除链表中重复的结点](#56-删除链表中重复的结点)
 - [57 二叉树的下一个结点](#57-二叉树的下一个结点)
 - [58 对称的二叉树](#58-对称的二叉树)
 - [59 按之字形顺序打印二叉树](#59-按之字形顺序打印二叉树)
 - [60 把二叉树打印成多行](#60-把二叉树打印成多行)
+- [61 序列化二叉树](#61-序列化二叉树)
+- [62 二叉搜索树的第k个结点](#62-二叉搜索树的第k个结点)
 - [64 滑动窗口的最大值](#64-滑动窗口的最大值)
 
 ## 题册
@@ -2297,6 +2301,101 @@ public class Solution {
 }
 ```
 
+### 55. 链表中环的入口结点
+
+#### 题目描述
+
+> 给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null  
+> 
+> 题目链接：[https://www.nowcoder.com/practice/253d2c59ec3e4bc68da16833f79a38e4](https://www.nowcoder.com/practice/253d2c59ec3e4bc68da16833f79a38e4)
+
+#### 解题思路
+
+> 利用两个指针(fast 和 slow), 如果没有环，那么 fast 和 slow 不会相遇此时返回 null；如果有环，那 fast 和 slow 肯定会再次相遇  
+> 相遇的时候，fast 刚好比 slow 多走了一圈环的长度。通过画图我们可以得知 slow 距离环起点的距离和 pHead 距离起点的距离是一样的  
+> 所以我们可以再次进行一次循环，找到这个起点
+
+``` java
+public class Solution {
+    public ListNode EntryNodeOfLoop(ListNode pHead) {
+        ListNode fast = pHead;
+        ListNode slow = pHead;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                ListNode p = pHead;
+                while (p != slow) {
+                    p = p.next;
+                    slow = slow.next;
+                }
+                return p;
+            }
+        }
+        return null;
+    }
+}
+```
+
+### 56. 删除链表中重复的结点
+
+#### 题目描述
+
+> 在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1->2->3->3->4->4->5 处理后为 1->2->5  
+> 
+> 题目链接：[https://www.nowcoder.com/practice/fc533c45b73a41b0b44ccba763f866ef](https://www.nowcoder.com/practice/fc533c45b73a41b0b44ccba763f866ef)
+
+```java
+/**
+ * 递归解法
+ */
+public class Solution {
+    public ListNode deleteDuplication(ListNode pHead)
+    {
+        if (pHead == null || pHead.next == null) {
+            return pHead;
+        }
+        if (pHead.val == pHead.next.val) {
+            ListNode pNode = pHead.next;
+            while (pNode != null && pNode.val == pHead.val) {
+                pNode = pNode.next;
+            }
+            return deleteDuplication(pNode);
+        } else {
+            pHead.next = deleteDuplication(pHead.next);
+            return pHead;
+        }
+    }
+}
+
+/**
+ * 非递归解法
+ */
+public class Solution {
+    public ListNode deleteDuplication(ListNode pHead)
+    {
+        ListNode first = new ListNode(0);
+        first.next = pHead;
+        ListNode p = pHead;
+        ListNode last = first;
+        
+        while (p != null && p.next != null) {
+            if (p.val == p.next.val) {
+                int value = p.val;
+                while (p != null && p.val == value) {
+                    p = p.next;
+                }
+                last.next = p;
+            } else {
+                last = p;
+                p = p.next;
+            }
+        }
+        return first.next;
+    }
+}
+```
+
 ### 57. 二叉树的下一个结点
 
 #### 题目描述
@@ -2374,46 +2473,44 @@ public class Solution {
 public class Solution {
     public ArrayList<ArrayList<Integer> > Print(TreeNode pRoot) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-		if (pRoot == null) {
-			return result;
-		}
-		LinkedList<TreeNode> queue = new LinkedList<>();
-		queue.addLast(null); // 层分隔符
-		queue.addLast(pRoot);
-		boolean leftToRight = true;
+        if (pRoot == null) {
+            return result;
+        }
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.addLast(null); // 层分隔符
+        queue.addLast(pRoot);
+        boolean leftToRight = true;
 		
-		while (queue.size() != 1) {
-			TreeNode node = queue.removeFirst();
-			// 判断是否到达层分隔符
-			if (node == null) {
-				ArrayList<Integer> list = new ArrayList<>();
-				Iterator<TreeNode> iterator = null;
-				if (leftToRight) {
-					iterator = queue.iterator();  // 正序遍历
-				} else {
-					iterator = queue.descendingIterator();  // 逆序遍历
-				}
-				leftToRight = !leftToRight;
-				while (iterator.hasNext()) {
-					TreeNode temp = iterator.next();
-					list.add(temp.val);
-				}
-				result.add(list);
-				queue.addLast(null);
-				continue;
-			}
-			if (node.left != null) {
-				queue.addLast(node.left);
-			}
-			if (node.right != null) {
-				queue.addLast(node.right);
-			}
-		}
+        while (queue.size() != 1) {
+            TreeNode node = queue.removeFirst();
+            // 判断是否到达层分隔符
+            if (node == null) {
+                ArrayList<Integer> list = new ArrayList<>();
+                Iterator<TreeNode> iterator = null;
+                if (leftToRight) {
+                    iterator = queue.iterator();  // 正序遍历
+                } else {
+                    iterator = queue.descendingIterator();  // 逆序遍历
+                }
+                leftToRight = !leftToRight;
+                while (iterator.hasNext()) {
+                    TreeNode temp = iterator.next();
+                    list.add(temp.val);
+                }
+                result.add(list);
+                queue.addLast(null);
+                continue;
+            }
+            if (node.left != null) {
+                queue.addLast(node.left);
+            }
+            if (node.right != null) {
+                queue.addLast(node.right);
+            }
+        }
 		
-		return result;
-		
+        return result;
     }
-
 }
 ```
 
@@ -2482,6 +2579,41 @@ public class Solution {
             node.right = Deserialize(str);
         }
         return node;
+    }
+}
+```
+
+### 62. 二叉搜索树的第k个结点
+
+#### 题目描述
+
+> 给定一棵二叉搜索树，请找出其中的第k小的结点  
+> 例如，（5，3，7，2，4，6，8）中，按结点数值大小顺序第三小结点的值为4  
+> 
+> 题目链接：[https://www.nowcoder.com/practice/ef068f602dde4d28aab2b210e859150a](https://www.nowcoder.com/practice/ef068f602dde4d28aab2b210e859150a)
+
+``` java
+/**
+ * 中序遍历，递归寻找
+ */
+public class Solution {
+    int count = 0;
+    TreeNode KthNode(TreeNode pRoot, int k) {
+        if (pRoot == null) {
+            return null;
+        }
+        TreeNode node = KthNode(pRoot.left, k);
+        if (node != null) {
+            return node;
+        }
+        if (++count == k) {
+            return pRoot;
+        }
+        node = KthNode(pRoot.right, k);
+        if (node != null) {
+            return node;
+        }
+        return null;
     }
 }
 ```
