@@ -53,6 +53,7 @@
 - [49 把字符串转换成整数](#49-把字符串转换成整数)
 - [50 数组中重复的数字](#50-数组中重复的数字)
 - [51 构建乘积数组](#51-构建乘积数组)
+- [52 正则表达式匹配](#52-正则表达式匹配)
 - [53 表示数值的字符串](#53-表示数值的字符串)
 - [54 字符流中第一个不重复的字符](#54-字符流中第一个不重复的字符)
 - [55 链表中环的入口结点](#55-链表中环的入口结点)
@@ -63,6 +64,7 @@
 - [60 把二叉树打印成多行](#60-把二叉树打印成多行)
 - [61 序列化二叉树](#61-序列化二叉树)
 - [62 二叉搜索树的第k个结点](#62-二叉搜索树的第k个结点)
+- [63 数据流中的中位数](#63-数据流中的中位数)
 - [64 滑动窗口的最大值](#64-滑动窗口的最大值)
 
 ## 题册
@@ -2207,6 +2209,64 @@ public class Solution {
 }
 ```
 
+### 52. 正则表达式匹配
+
+#### 题目描述
+
+> 请实现一个函数用来匹配包括'.'和'\*' 的正则表达式  
+> 模式中的字符'.'表示任意一个字符，而'\*'表示它前面的字符可以出现任意次（包含0次）  
+> 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串"aaa"与模式"a.a"和"ab\*ac\*a"匹配，但是与"aa.a"和"ab\*a"均不匹配
+
+#### 解题思路
+
+- 当模式中的第二个字符是 "\*" 时
+  - 如果字符串第一个字符跟模式第一个字符不匹配，则模式后移 2 个字符
+  - 如果字符串第一个字符跟模式第一个字符匹配，可以有 3 种匹配方式
+    - 模式后移 2 字符，相当于 x* 被忽略
+    - 字符串后移 1 字符，模式后移 2 字符
+    - 字符串后移 1 字符，模式不变，即继续匹配字符下一位，因为 * 可以匹配多位
+- 当模式中的第二个字符不是 "\*" 时
+  - 如果字符串第一个字符和模式中的第一个字符相匹配，那么字符串和模式都后移一个字符，然后匹配剩余的
+  - 如果字符串第一个字符和模式中的第一个字符相不匹配，直接返回 false
+
+``` java
+public boolean match(char[] str, char[] pattern) {
+    if (str == null || pattern == null) {
+        return false;
+    }
+    return match(str, 0, pattern, 0);
+}
+
+public boolean match(char[] str, int strIndex, char[] pattern, int patternIndex) {
+    if (strIndex == str.length && patternIndex == pattern.length) {
+        return true;
+    }
+    if (strIndex != str.length && patternIndex == pattern.length) {
+        return false;
+    }
+    // 模式中的第二个字符是 "*"
+    if (patternIndex + 1 < pattern.length && pattern[patternIndex + 1] == '*') {
+        if ((strIndex != str.length && pattern[patternIndex] == str[strIndex]) 
+            || (pattern[patternIndex] == '.' && strIndex != str.length)) {
+            return match(str, strIndex, pattern, patternIndex + 2)
+                || match(str, strIndex + 1, pattern, patternIndex + 2)
+                || match(str, strIndex + 1, pattern, patternIndex);
+        } else {
+        	// 字符串第一个字符跟模式第一个字符不匹配, 则模式后移2个字符
+            return match(str, strIndex, pattern, patternIndex + 2);
+        }
+    }
+    // 模式中的第二个字符不是 "*"
+    // 如果字符串第一个字符和模式中的第一个字符相匹配，那么字符串和模式都后移一个字符
+    if (strIndex != str.length) {
+        if (pattern[patternIndex] == str[strIndex] || pattern[patternIndex] == '.') {
+            return match(str, strIndex + 1, pattern, patternIndex + 1);
+        }
+    }
+    return false;
+ }
+```
+
 ### 53. 表示数值的字符串
 
 #### 题目描述
@@ -2614,6 +2674,56 @@ public class Solution {
             return node;
         }
         return null;
+    }
+}
+```
+
+### 63.数据流中的中位数
+
+#### 题目描述
+
+> 如何得到一个数据流中的中位数？  
+> 如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值;  
+> 如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值;  
+> 我们使用Insert()方法读取数据流，使用GetMedian()方法获取当前读取数据的中位数。
+
+#### 解题思路
+
+``` java
+import java.util.PriorityQueue;
+import java.util.Comparator;
+
+public class Solution {
+
+    private PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+	
+    private PriorityQueue<Integer> maxHeap = new PriorityQueue<>(new Comparator<Integer>() {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return o2 - o1;
+        }
+    });
+	
+    int count = 0;
+	
+    public void Insert(Integer num) {
+        if (count % 2 == 0) {
+            maxHeap.offer(num);
+            int max = maxHeap.poll();
+            minHeap.offer(max);
+        } else {
+            minHeap.offer(num);
+            int min = minHeap.poll();
+            maxHeap.offer(min);
+        }
+        count ++;
+    }
+
+    public Double GetMedian() {
+        if (count % 2 == 0) {
+            return new Double(minHeap.peek() + maxHeap.peek()) / 2; 
+        }
+        return new Double(minHeap.peek());
     }
 }
 ```
