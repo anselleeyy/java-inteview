@@ -66,6 +66,8 @@
 - [62 二叉搜索树的第k个结点](#62-二叉搜索树的第k个结点)
 - [63 数据流中的中位数](#63-数据流中的中位数)
 - [64 滑动窗口的最大值](#64-滑动窗口的最大值)
+- [65 矩阵中的路径](#65-矩阵中的路径)
+- [66 机器人的运动范围](#66-机器人的运动范围)
 
 ## 题册
 
@@ -2774,6 +2776,105 @@ public class Solution {
             }
         }
         return result;
+    }
+}
+```
+
+### 65. 矩阵中的路径
+
+#### 题目描述
+
+> 请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径  
+> 路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则之后不能再次进入这个格子  
+> 例如 a b c e s f c s a d e e 这样的3 X 4 矩阵中包含一条字符串"bcced"的路径，但是矩阵中不包含"abcb"路径，因为字符串的第一个字符b占据了矩阵中的第一行第二个格子之后，路径不能再次进入该格子。
+
+#### 解题思路
+
+> 新建一个数据记录该格子是否遍历过，随后进行模拟即可
+
+``` java
+public class Solution {
+    public boolean hasPath(char[] matrix, int rows, int cols, char[] str)
+    {
+        int flag[] = new int[matrix.length];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (find(matrix, rows, cols, i, j, str, 0, flag)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean find(char[] matrix, int rows, int cols, int i, int j, char[] str, int cur, int[] flag) {
+        int index = i * cols + j;
+        if (i < 0 || i >= rows || j < 0 || j >= cols || matrix[index] != str[cur] || flag[index] == 1) {
+            return false;
+        }
+        if (cur == str.length - 1) {
+            return true;
+        }
+        flag[index] = 1;
+        if (find(matrix, rows, cols, i - 1, j, str, cur + 1, flag)
+           || find(matrix, rows, cols, i + 1, j, str, cur + 1, flag)
+           || find(matrix, rows, cols, i, j - 1, str, cur + 1, flag)
+           || find(matrix, rows, cols, i, j + 1, str, cur + 1, flag)) {
+            return true;
+        }
+        flag[index] = 0;
+        return false;
+    }
+}
+```
+
+### 66. 机器人的运动范围
+
+#### 题目描述
+
+> 地上有一个 m 行和 n 列的方格。一个机器人从坐标 0,0 的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于k的格子  
+> 例如，当 k 为 18 时，机器人能够进入方格（35, 37），因为 3+5+3+7 = 18。但是，它不能进入方格（35,38），因为 3+5+3+8 = 19  
+> 请问该机器人能够达到多少个格子？
+
+#### 解题思路
+
+> 模拟
+
+``` java
+public class Solution {
+    private int count = 0;
+
+    public int movingCount(int threshold, int rows, int cols) {
+    	int[][] matrix = new int[rows][cols];
+    	find(matrix, threshold, 0, 0);
+    	return count;
+    }
+
+    private void find(int[][] matrix, int threshold, int row, int col) {
+    	if (row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length || matrix[row][col] == 1) {
+    	    return;
+    	}
+    	if (!checkLimit(threshold, row, col)) {
+    	    return;
+    	}
+    	count += 1;
+    	matrix[row][col] = 1;
+    	find(matrix, threshold, row+1, col);
+    	find(matrix, threshold, row-1, col);
+    	find(matrix, threshold, row, col+1);
+    	find(matrix, threshold, row, col-1);
+    }
+
+    private boolean checkLimit(int threshold, int row, int col) {
+    	int count = 0;
+    	while (row > 0 || col > 0) {
+    	    count += row % 10;
+    	    count += col % 10;
+    	    row /= 10;
+    	    col /= 10;
+    	}
+    	count += (row + col);
+    	return count <= threshold;
     }
 }
 ```
