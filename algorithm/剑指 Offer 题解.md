@@ -2218,6 +2218,8 @@ public class Solution {
 > 请实现一个函数用来匹配包括'.'和'\*' 的正则表达式  
 > 模式中的字符'.'表示任意一个字符，而'\*'表示它前面的字符可以出现任意次（包含0次）  
 > 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串"aaa"与模式"a.a"和"ab\*ac\*a"匹配，但是与"aa.a"和"ab\*a"均不匹配
+> 
+> 题目链接：[https://www.nowcoder.com/practice/45327ae22b7b413ea21df13ee7d6429c](https://www.nowcoder.com/practice/45327ae22b7b413ea21df13ee7d6429c)
 
 #### 解题思路
 
@@ -2612,6 +2614,8 @@ public class Solution {
 #### 题目描述
 
 > 请实现两个函数，分别用来序列化和反序列化二叉树
+> 
+> 题目链接：[https://www.nowcoder.com/practice/cf7e25aa97c04cc1a68c8f040e71fb84](https://www.nowcoder.com/practice/cf7e25aa97c04cc1a68c8f040e71fb84)
 
 ``` java
 /**
@@ -2688,6 +2692,8 @@ public class Solution {
 > 如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值;  
 > 如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值;  
 > 我们使用Insert()方法读取数据流，使用GetMedian()方法获取当前读取数据的中位数。
+> 
+> 题目链接：[https://www.nowcoder.com/practice/9be0172896bd43948f8a32fb954e1be1](https://www.nowcoder.com/practice/9be0172896bd43948f8a32fb954e1be1)
 
 #### 解题思路
 
@@ -2787,6 +2793,8 @@ public class Solution {
 > 请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径  
 > 路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则之后不能再次进入这个格子  
 > 例如 a b c e s f c s a d e e 这样的3 X 4 矩阵中包含一条字符串"bcced"的路径，但是矩阵中不包含"abcb"路径，因为字符串的第一个字符b占据了矩阵中的第一行第二个格子之后，路径不能再次进入该格子。
+> 
+> 题目链接：[https://www.nowcoder.com/practice/c61c6999eecb4b8f88a98f66b273a3cc](https://www.nowcoder.com/practice/c61c6999eecb4b8f88a98f66b273a3cc)
 
 #### 解题思路
 
@@ -2835,6 +2843,8 @@ public class Solution {
 > 地上有一个 m 行和 n 列的方格。一个机器人从坐标 0,0 的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于k的格子  
 > 例如，当 k 为 18 时，机器人能够进入方格（35, 37），因为 3+5+3+7 = 18。但是，它不能进入方格（35,38），因为 3+5+3+8 = 19  
 > 请问该机器人能够达到多少个格子？
+> 
+> 题目链接：[https://www.nowcoder.com/practice/6e5207314b5241fb83f2329e89fdecc8](https://www.nowcoder.com/practice/6e5207314b5241fb83f2329e89fdecc8)
 
 #### 解题思路
 
